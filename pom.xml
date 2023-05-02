@@ -17,41 +17,66 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+
+        <!-- Spring Boot及Spring Security相关依赖 -->
+        <!--Spring Boot中基础的安全依赖，提供了安全框架的基础支持-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!--Spring Boot中基础的Web依赖，提供了Web开发所需要的基本功能-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <!--Spring Boot中的开发者工具，可以自动重启应用程序以提高开发效率-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
+        <!--Spring Boot中的测试依赖，提供了单元测试和集成测试的支持-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--Spring Security中的测试依赖，提供了安全框架测试所需要的基本功能-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--数据库及ORM框架相关依赖-->
+        <!--Mybatis-Plus ORM框架的Spring Boot Starter，提供了ORM框架的基本支持-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.3.1</version>
+        </dependency>
+        <!--MySQL数据库连接驱动，连接MySQL必备-->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--工具依赖-->
+        <!--注解处理器，可以减少代码冗余-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--工具库，提供了常见的数据处理、加密解密、日期处理、网络操作等功能-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.15</version>
+        </dependency>
+
     </dependencies>
 
     <build>
