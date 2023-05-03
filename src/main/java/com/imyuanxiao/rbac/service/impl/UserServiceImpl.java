@@ -1,8 +1,11 @@
 package com.imyuanxiao.rbac.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.imyuanxiao.rbac.enums.ResultCode;
 import com.imyuanxiao.rbac.model.entity.User;
+import com.imyuanxiao.rbac.model.param.LoginParam;
 import com.imyuanxiao.rbac.model.vo.ResultVO;
 import com.imyuanxiao.rbac.service.UserService;
 import com.imyuanxiao.rbac.mapper.UserMapper;
@@ -25,6 +28,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         return new ResultVO<>(user);
     }
+
+
+    @Override
+    public User getUserByUsername(String username) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper();
+        // 通过实体类的属性名来指定查询条件，即字段上的TableFiled
+        lambdaQueryWrapper.eq(User::getUsername, username);
+        return this.getOne(lambdaQueryWrapper);
+    }
+
 }
 
 
