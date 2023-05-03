@@ -2,6 +2,7 @@ package com.imyuanxiao.rbac.service;
 
 import com.imyuanxiao.rbac.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.imyuanxiao.rbac.model.vo.ResultVO;
 
 /**
 * @author Administrator
@@ -9,5 +10,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-05-03 00:42:01
 */
 public interface UserService extends IService<User> {
+
+    /**
+     * 登录
+     * @param id 用户ID
+     * @return 登录成功则返回vo对象，失败则抛出异常
+     */
+    ResultVO<User> getUserById(Long id);
+
 
 }

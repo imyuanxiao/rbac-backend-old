@@ -1,7 +1,9 @@
 package com.imyuanxiao.rbac.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.imyuanxiao.rbac.enums.ResultCode;
 import com.imyuanxiao.rbac.model.entity.User;
+import com.imyuanxiao.rbac.model.vo.ResultVO;
 import com.imyuanxiao.rbac.service.UserService;
 import com.imyuanxiao.rbac.mapper.UserMapper;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,14 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
 
+    @Override
+    public ResultVO<User> getUserById(Long id) {
+        User user = this.getById(id);
+        if(user == null){
+            return new ResultVO<>(ResultCode.FAILED, null);
+        }
+        return new ResultVO<>(user);
+    }
 }
 
 
