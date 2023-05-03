@@ -31,9 +31,9 @@ public class UserController {
     @GetMapping("/token")
     public String testToken(HttpServletRequest request) {
         // 从请求头中获取token字符串
-        String jwt = request.getHeader("Authorization");
+        String token = request.getHeader("Authorization");
         // 解析失败就提示用户登录
-        if (JwtUtil.parse(jwt) == null) {
+        if (JwtUtil.parse(token) == null) {
             return "请先登录";
         }
         // 解析成功就执行业务逻辑返回数据
