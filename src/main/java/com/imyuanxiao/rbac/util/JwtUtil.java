@@ -1,15 +1,18 @@
 package com.imyuanxiao.rbac.util;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.*;
 import cn.hutool.jwt.signers.JWTSignerUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
 
+import java.io.Serial;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author: imyuanxiao
@@ -35,14 +38,21 @@ public final class JwtUtil {
      * @return JWT
      */
     public static String generate(String userName) {
-        // 过期时间
-        Instant expiryInstant = Instant.now().plus(expiration);
-        Date expiryDate = Date.from(expiryInstant);
 
-        return JWT.create().setSubject(userName) // 将userName放进JWT
-                .setIssuedAt(DateUtil.date()) // 设置JWT签发时间
-                .setExpiresAt(expiryDate) // 设置过期时间
-                .sign(JWTSignerUtil.createSigner("HS256", secretKeyBytes));// 设置加密算法和秘钥
+        DateTime now = DateUtil.date();
+        DateTime ddl = DateUtil.offsetMinute(now, 30);
+
+        Map<String, Object> map = new HashMap<String, Object>() {
+            {
+                put(JWTPayload.ISSUED_AT, now);
+                put(JWTPayload.EXPIRES_AT, ddl);
+                put(JWTPayload.NOT_BEFORE, now);
+                put("username", userName);
+            }
+        };
+
+        return JWTUtil.createToken(map, secretKeyBytes);
+
     }
 
     /**
@@ -59,29 +69,20 @@ public final class JwtUtil {
         JWT jwt = null;
         // 解析失败了会抛出异常，所以要捕捉一下。token过期、token非法都会导致解析失败
         try {
-            // 此处仅为解析，验证需要另外步骤
+            // 解析（包含验证签名）
             jwt = JWTUtil.parseToken(token);
-            System.out.println(jwt.getPayload().toString());
+
+            // 验证算法和时间
+            JWTValidator validator = JWTValidator.of(jwt);
+            // 验证算法
+            validator.validateAlgorithm(JWTSignerUtil.hs256(secretKeyBytes));
+            // 验证时间
+            JWTValidator.of(jwt).validateDate();
         } catch (Exception e) {
-            log.error("token解析失败");
+            log.error("token解析和验证失败");
+            return null;
         }
         return jwt;
     }
-
-    public static boolean verify(String token){
-        try {
-            JWT jwt = JWT.of(token);
-            JWTValidator.of(jwt)
-                    .validateAlgorithm(JWTSignerUtil.createSigner("HS256", secretKeyBytes))
-                    .validateDate(DateUtil.date());
-            // 获取JWT中其他属性并验证
-            // TODO
-            return true;
-        } catch (JWTException e) {
-            return false;
-        }
-
-    }
-
 
 }
