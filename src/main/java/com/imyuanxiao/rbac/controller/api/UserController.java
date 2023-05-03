@@ -1,4 +1,4 @@
-package com.imyuanxiao.rbac.model.api;
+package com.imyuanxiao.rbac.controller.api;
 
 import com.imyuanxiao.rbac.annotation.NotResponseBody;
 import com.imyuanxiao.rbac.context.UserContext;
