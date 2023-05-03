@@ -1,5 +1,6 @@
 package com.imyuanxiao.rbac.controller.api;
 
+import com.imyuanxiao.rbac.annotation.NotResponseBody;
 import com.imyuanxiao.rbac.model.entity.User;
 import com.imyuanxiao.rbac.model.vo.ResultVO;
 import com.imyuanxiao.rbac.service.UserService;
@@ -39,11 +40,13 @@ public class UserController {
         return userService.getById(id);
     }
 
+    @NotResponseBody
     @ApiOperation(value = "Get user by ID, return String")
     @GetMapping("/string/{id}")
     public String getUserByIdReturnString(@ApiParam(value = "User ID", required = true)
                                       @PathVariable("id") Long id) {
         return userService.getById(id).toString();
     }
+
 
 }

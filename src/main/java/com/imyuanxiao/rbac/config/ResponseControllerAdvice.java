@@ -2,6 +2,7 @@ package com.imyuanxiao.rbac.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.imyuanxiao.rbac.annotation.NotResponseBody;
 import com.imyuanxiao.rbac.exception.APIException;
 import com.imyuanxiao.rbac.model.vo.ResultVO;
 import org.springframework.core.MethodParameter;
@@ -22,8 +23,10 @@ public class ResponseControllerAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        // If false, won't carry out beforeBodyWrite()
         // If the return type of the interface is already ResultVO, there is no need for additional operations. Return false.
-        return !returnType.getParameterType().equals(ResultVO.class);
+        // If method has annotation @NotResponseBody, return false
+        return !(returnType.getParameterType().equals(ResultVO.class) || returnType.hasMethodAnnotation(NotResponseBody.class)) ;
     }
 
     @Override
