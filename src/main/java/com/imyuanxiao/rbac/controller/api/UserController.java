@@ -29,13 +29,7 @@ public class UserController {
 
     @ApiOperation(value = "测试token解析与验证")
     @GetMapping("/token")
-    public String testToken(HttpServletRequest request) {
-        // 从请求头中获取token字符串
-        String token = request.getHeader("Authorization");
-        // 解析失败就提示用户登录
-        if (JwtUtil.parse(token) == null) {
-            return "请先登录";
-        }
+    public String testToken() {
         // 解析成功就执行业务逻辑返回数据
         return "api成功返回数据";
     }
