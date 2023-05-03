@@ -38,10 +38,8 @@ public final class JwtUtil {
      * @return JWT
      */
     public static String generate(String userName) {
-
         DateTime now = DateUtil.date();
         DateTime ddl = DateUtil.offsetMinute(now, 30);
-
         Map<String, Object> map = new HashMap<String, Object>() {
             {
                 put(JWTPayload.ISSUED_AT, now);
@@ -50,7 +48,6 @@ public final class JwtUtil {
                 put("username", userName);
             }
         };
-
         return JWTUtil.createToken(map, secretKeyBytes);
 
     }

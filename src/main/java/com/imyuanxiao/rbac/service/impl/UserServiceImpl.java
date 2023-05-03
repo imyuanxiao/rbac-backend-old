@@ -29,7 +29,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return new ResultVO<>(user);
     }
 
-
     @Override
     public User getUserByUsername(String username) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper();

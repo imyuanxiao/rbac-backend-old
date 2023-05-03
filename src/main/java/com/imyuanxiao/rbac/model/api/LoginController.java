@@ -1,4 +1,4 @@
-package com.imyuanxiao.rbac.controller.api;
+package com.imyuanxiao.rbac.model.api;
 
 import com.imyuanxiao.rbac.model.entity.User;
 import com.imyuanxiao.rbac.model.param.LoginParam;

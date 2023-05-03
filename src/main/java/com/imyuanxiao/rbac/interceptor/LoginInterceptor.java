@@ -1,6 +1,8 @@
 package com.imyuanxiao.rbac.interceptor;
 
 import cn.hutool.jwt.JWT;
+import com.imyuanxiao.rbac.context.UserContext;
+import com.imyuanxiao.rbac.model.entity.User;
 import com.imyuanxiao.rbac.util.JwtUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,9 +21,11 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         // 从请求头中获取token字符串并解析
-        JWT result = JwtUtil.parse(request.getHeader("Authorization"));
+        JWT jwt = JwtUtil.parse(request.getHeader("Authorization"));
         // 已登录就直接放行
-        if (result != null) {
+        if (jwt != null) {
+            // 添加上下文对象
+            UserContext.add((String)jwt.getPayload("username"));
             return true;
         }
 
@@ -34,5 +38,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         out.flush();
         out.close();
         return false;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        // 结束后移除上下文对象
+        UserContext.remove();
+        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }
