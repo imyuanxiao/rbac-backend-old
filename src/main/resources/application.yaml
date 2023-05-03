@@ -7,3 +7,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
+
+logging:
+  level:
+    root: info    # ????????info
+    com.imyuanxiao.rbac: debug    # ??com.imyuanxiao????????debug
+
