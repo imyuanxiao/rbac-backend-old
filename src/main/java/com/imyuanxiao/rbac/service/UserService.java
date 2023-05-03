@@ -22,4 +22,5 @@ public interface UserService extends IService<User> {
 
     User getUserByUsername(String username);
 
+    User login(LoginParam loginParam);
 }

@@ -3,6 +3,7 @@ package com.imyuanxiao.rbac.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imyuanxiao.rbac.annotation.NotResponseBody;
+import com.imyuanxiao.rbac.enums.ResultCode;
 import com.imyuanxiao.rbac.exception.APIException;
 import com.imyuanxiao.rbac.model.vo.ResultVO;
 import org.springframework.core.MethodParameter;
@@ -37,7 +38,7 @@ public class ResponseControllerAdvice implements ResponseBodyAdvice<Object> {
             try {
                 return objectMapper.writeValueAsString(new ResultVO<>(data));
             } catch (JsonProcessingException e) {
-                throw new APIException("返回String类型错误");
+                throw new APIException(ResultCode.FAILED,"返回String类型错误");
             }
         }
         return new ResultVO<>(data);

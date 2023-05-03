@@ -21,7 +21,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(APIException.class)
     public ResultVO<String> APIExceptionHandler(APIException e) {
         // 返回自定义异常提示信息
-        return new ResultVO<>(ResultCode.FAILED, e.getMsg());
+        return new ResultVO<>(e.getResultCode(), e.getMsg());
     }
 
 

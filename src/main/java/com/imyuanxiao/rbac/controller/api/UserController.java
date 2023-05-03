@@ -1,18 +1,13 @@
 package com.imyuanxiao.rbac.controller.api;
 
-import com.imyuanxiao.rbac.annotation.NotResponseBody;
 import com.imyuanxiao.rbac.context.UserContext;
 import com.imyuanxiao.rbac.model.entity.User;
-import com.imyuanxiao.rbac.model.vo.ResultVO;
 import com.imyuanxiao.rbac.service.UserService;
-import com.imyuanxiao.rbac.util.JwtUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author: imyuanxiao
@@ -26,7 +21,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
 
     @ApiOperation(value = "Get user by ID, return User")
     @GetMapping("/user/{id}")
@@ -47,7 +41,7 @@ public class UserController {
     @GetMapping("/context")
     public String testUsercontext() {
         // 解析成功就执行业务逻辑返回数据
-        String userName = UserContext.getCurrentUserName();
+        String userName = UserContext.get();
         return "当前用户为：" + userName;
     }
 
