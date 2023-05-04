@@ -14,9 +14,53 @@
             <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        id,name,type,
-        url,description,created_time,
-        updated_time
-    </sql>
+    <!--根据角色id批量增加权限-->
+    <insert id="insertPermissionsByRoleId">
+        insert into role_permission(role_id, permission_id) values
+        <foreach collection="permissionIds" separator="," item="permissionId">
+            (#{roleId}, #{permissionId})
+        </foreach>
+    </insert>
+
+    <!--批量新增权限资源-->
+    <insert id="insertPermissions">
+        insert into resource(id, path, name, type) values
+        <foreach collection="permissions" separator="," item="permission">
+            (#{permission.id}, #{permission.url}, #{permission.name}, #{permission.type})
+        </foreach>
+    </insert>
+
+    <!--根据角色id删除该角色下所有权限-->
+    <delete id="deleteByRoleId">
+        delete from role_permission where role_id = #{roleId}
+    </delete>
+
+    <!--根据用户id获取权限id-->
+    <select id="selectIdsByUserId" resultType="java.lang.Long">
+        SELECT
+            rr.permission_id
+        FROM
+            user_role ur
+                INNER JOIN role_permission rr ON ur.role_id = rr.role_id
+        WHERE
+            ur.user_id = #{userId}
+    </select>
+
+    <!--根据角色id获取权限id-->
+    <select id="selectIdsByRoleId" resultType="java.lang.Long">
+        select permission_id from role_permission where role_id = #{roleId}
+    </select>
+
+    <!--根据用户id获取权限集合-->
+    <select id="selectListByUserId" resultType="com.imyuanxiao.rbac.model.entity.Permission">
+        SELECT
+            r.*
+        FROM
+            user_role ur
+                INNER JOIN role_permission rr ON ur.role_id = rr.role_id
+                INNER JOIN permission r ON rr.permission_id = r.id
+        WHERE
+            ur.user_id = #{userId};
+    </select>
+
 </mapper>

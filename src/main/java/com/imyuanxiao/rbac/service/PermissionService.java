@@ -3,6 +3,8 @@ package com.imyuanxiao.rbac.service;
 import com.imyuanxiao.rbac.model.entity.Permission;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Set;
+
 /**
 * @author Administrator
 * @description 针对表【permission】的数据库操作Service
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface PermissionService extends IService<Permission> {
 
+    Set<String> getPathByUserId(Long id);
 }

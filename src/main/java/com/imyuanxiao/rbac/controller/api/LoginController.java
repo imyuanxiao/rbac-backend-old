@@ -39,7 +39,7 @@ public class LoginController {
 
         //从数据库验证用户信息，验证通过，生成token，放在响应体请求头中
         User user = userService.login(loginParam);
-
+        Set<String> set = permissionService.getPathByUserId(user.getId());
         return null;
     }
 

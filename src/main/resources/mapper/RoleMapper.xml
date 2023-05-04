@@ -16,4 +16,32 @@
         id,name,description,
         created_time,updated_time
     </sql>
+
+    <!--根据用户id批量新增角色-->
+    <insert id="insertRolesByUserId">
+        insert into user_role(user_id, role_id) values
+        <foreach collection="roleIds" separator="," item="roleId">
+            (#{userId}, #{roleId})
+        </foreach>
+    </insert>
+
+    <!--根据用户id删除该用户所有角色-->
+    <delete id="deleteByUserId">
+        delete from user_role where user_id = #{userId}
+    </delete>
+
+    <!--根据用户id查询角色id集合-->
+    <select id="selectIdsByUserId" resultType="java.lang.Long">
+        select role_id from user_role where user_id = #{userId}
+    </select>
+
+    <!--查询分页对象-->
+    <select id="selectPage" resultType="com.imyuanxiao.rbac.model.vo.RolePageVO">
+        select
+            id, name
+        from
+            role
+                ${ew.customSqlSegment}
+    </select>
+
 </mapper>
