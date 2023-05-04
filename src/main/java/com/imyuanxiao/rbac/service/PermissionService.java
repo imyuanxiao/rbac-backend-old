@@ -12,5 +12,5 @@ import java.util.Set;
 */
 public interface PermissionService extends IService<Permission> {
 
-    Set<String> getPathByUserId(Long id);
+    Set<Long> getIdsByUserId(Long userId);
 }

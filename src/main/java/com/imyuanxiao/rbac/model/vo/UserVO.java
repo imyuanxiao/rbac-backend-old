@@ -1,6 +1,7 @@
 package com.imyuanxiao.rbac.model.vo;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import java.util.Set;
  * @Date: 2023/5/4 15:05
  */
 @Data
+@Accessors(chain = true)
 public class UserVO {
 
     /**

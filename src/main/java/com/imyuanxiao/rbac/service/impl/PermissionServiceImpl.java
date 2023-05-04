@@ -9,6 +9,7 @@ import com.imyuanxiao.rbac.mapper.PermissionMapper;
 import com.imyuanxiao.rbac.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -18,20 +19,16 @@ import java.util.Set;
 * @createDate 2023-05-03 00:42:19
 */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permission>
     implements PermissionService{
 
-    @Autowired
-    RoleService roleService;
-
     @Override
-    public Set<String> getPathByUserId(Long id) {
-        LambdaQueryWrapper<Permission> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        // 通过user_role获取role
-        // 通过role_permission获取permission
-
-        return null;
+    public Set<Long> getIdsByUserId(Long userId) {
+        return baseMapper.selectIdsByUserId(userId);
     }
+
+
 }
 
 

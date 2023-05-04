@@ -1,16 +1,19 @@
 package com.imyuanxiao.rbac.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.imyuanxiao.rbac.context.TokenContext;
 import com.imyuanxiao.rbac.enums.ResultCode;
-import com.imyuanxiao.rbac.exception.APIException;
-import com.imyuanxiao.rbac.mapper.PermissionMapper;
+import com.imyuanxiao.rbac.exception.ApiException;
 import com.imyuanxiao.rbac.model.entity.User;
 import com.imyuanxiao.rbac.model.param.LoginParam;
 import com.imyuanxiao.rbac.model.vo.ResultVO;
+import com.imyuanxiao.rbac.model.vo.UserVO;
+import com.imyuanxiao.rbac.service.PermissionService;
 import com.imyuanxiao.rbac.service.UserService;
 import com.imyuanxiao.rbac.mapper.UserMapper;
 import com.imyuanxiao.rbac.util.JwtUtil;
@@ -26,23 +29,28 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
 
+    @Autowired
+    private PermissionService permissionService;
+
     @Override
-    public User login(LoginParam loginParam) {
+    public UserVO login(LoginParam loginParam) {
         // 从数据库验证用户信息
-        // 用户名和密码都为空，直接结束
-        if(StrUtil.isBlank(loginParam.getUsername()) && StrUtil.isBlank(loginParam.getPhone())){
-            throw new APIException(ResultCode.VALIDATE_FAILED);
-        }
-        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(User::getUsername, loginParam.getUsername()).eq(User::getPhone, loginParam.getPhone());
-        User user = this.getOne(lambdaQueryWrapper);
+        User user = this.lambdaQuery()
+                .eq(StrUtil.isNotBlank(loginParam.getUsername()), User::getUsername, loginParam.getUsername())
+                .eq(StrUtil.isNotBlank(loginParam.getPhone()), User::getPhone, loginParam.getPhone())
+                .eq(StrUtil.isNotBlank(loginParam.getPassword()), User::getPassword, loginParam.getPassword())
+                .one();
+
+        // no such user, throw error
         if(user == null){
-            throw new APIException(ResultCode.VALIDATE_FAILED, "账号或密码错误！");
+            throw new ApiException(ResultCode.VALIDATE_FAILED, "账号或密码错误！");
         }
-        //从数据库验证用户信息，验证通过，生成token，放在响应体请求头中
-        String token = JwtUtil.generate(user.getUsername());
-        TokenContext.set(token);
-        return user;
+        // 验证通过，生成token，获取用户权限，放在UserVO中
+        UserVO userVO = new UserVO();
+        userVO.setId(user.getId()).setUsername(user.getUsername())
+                .setToken(JwtUtil.generate(user.getUsername()))
+                .setPermissionIds(permissionService.getIdsByUserId(user.getId()));
+        return userVO;
     }
 
     @Override

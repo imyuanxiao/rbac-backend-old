@@ -1,10 +1,9 @@
-package com.imyuanxiao.rbac.config;
+package com.imyuanxiao.rbac.controller;
 
 import com.imyuanxiao.rbac.annotation.ExceptionCode;
 import com.imyuanxiao.rbac.enums.ResultCode;
-import com.imyuanxiao.rbac.exception.APIException;
+import com.imyuanxiao.rbac.exception.ApiException;
 import com.imyuanxiao.rbac.model.vo.ResultVO;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,8 +17,8 @@ import java.lang.reflect.Field;
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
-    @ExceptionHandler(APIException.class)
-    public ResultVO<String> APIExceptionHandler(APIException e) {
+    @ExceptionHandler(ApiException.class)
+    public ResultVO<String> APIExceptionHandler(ApiException e) {
         // 返回自定义异常提示信息
         return new ResultVO<>(e.getResultCode(), e.getMsg());
     }
