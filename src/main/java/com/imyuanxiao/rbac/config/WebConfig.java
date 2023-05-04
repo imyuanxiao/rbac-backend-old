@@ -22,6 +22,9 @@ public class WebConfig implements WebMvcConfigurer {
         // 配置拦截器应用于哪些路径
         registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login/**");
+                .excludePathPatterns(
+                        "/login/**",
+                        "/test/token-generate/**"
+                        );
     }
 }

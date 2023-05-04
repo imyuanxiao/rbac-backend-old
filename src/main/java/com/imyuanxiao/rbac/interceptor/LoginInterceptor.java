@@ -1,17 +1,14 @@
 package com.imyuanxiao.rbac.interceptor;
 
 import cn.hutool.jwt.JWT;
-import com.imyuanxiao.rbac.context.TokenContext;
 import com.imyuanxiao.rbac.context.UserContext;
 import com.imyuanxiao.rbac.enums.ResultCode;
 import com.imyuanxiao.rbac.exception.ApiException;
 import com.imyuanxiao.rbac.util.JwtUtil;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
 /**
  * @Author: imyuanxiao
@@ -38,10 +35,6 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
-//        if(TokenContext.get() != null){
-//            request.setAttribute("Authorization", TokenContext.get());
-//            TokenContext.remove();
-//        }
         // 结束后移除上下文对象
         UserContext.remove();
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);

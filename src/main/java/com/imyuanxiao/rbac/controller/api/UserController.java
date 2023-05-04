@@ -42,19 +42,4 @@ public class UserController {
     }
 
 
-    @ApiOperation(value = "测试token解析与验证")
-    @GetMapping("/token")
-    public String testToken() {
-        // 解析成功就执行业务逻辑返回数据
-        return "api成功返回数据";
-    }
-
-    @ApiOperation(value = "测试上下文对象")
-    @GetMapping("/context")
-    public String testUsercontext() {
-        // 解析成功就执行业务逻辑返回数据
-        String userName = UserContext.get();
-        return "当前用户为：" + userName;
-    }
-
 }

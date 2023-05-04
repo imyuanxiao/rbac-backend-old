@@ -25,13 +25,11 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "Login")
+    @ApiOperation(value = "Login by password")
     @PostMapping("/pwd")
     public UserVO login(@RequestBody @Validated LoginParam loginParam){
         return userService.login(loginParam);
     }
-
-
 
 
 }
