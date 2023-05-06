@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * 认证异常处理
  * @Author: imyuanxiao
  * @Date: 2023/5/6 11:19
  */

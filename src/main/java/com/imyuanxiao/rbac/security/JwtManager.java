@@ -85,7 +85,6 @@ public final class JwtManager {
      *
      */
     public static void verifyToken(String token) {
-        JWT jwt = null;
         // 解析失败了会抛出异常，所以要捕捉一下。token过期、token非法都会导致解析失败
         try {
             //验证签名
@@ -94,11 +93,11 @@ public final class JwtManager {
                 throw new ApiException(ResultCode.VALIDATE_FAILED);
             }
             // 验证算法和时间
-            JWTValidator validator = JWTValidator.of(jwt);
+            JWTValidator validator = JWTValidator.of(token);
             // 验证算法
             validator.validateAlgorithm(JWTSignerUtil.hs256(secretKeyBytes));
             // 验证时间
-            JWTValidator.of(jwt).validateDate();
+            JWTValidator.of(token).validateDate();
         } catch (Exception e) {
             log.error("token验证失败:" + e.getMessage());
             throw new ApiException(ResultCode.VALIDATE_FAILED);

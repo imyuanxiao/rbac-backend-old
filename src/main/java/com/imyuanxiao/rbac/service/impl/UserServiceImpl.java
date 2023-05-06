@@ -59,14 +59,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return userVO;
     }
 
-    @Override
-    public UserDetailsVO getUserDetailsVO(String username) {
-        // get user info by username
-        User user = this.getUserByUsername(username);
-        // get user roles by user id
-        Set<Role> roleSet = roleService.roleListByUsername(user.getId());
-        return new UserDetailsVO().setUser(user).setRoles(roleSet);
-    }
+//    @Override
+//    public UserDetailsVO getUserDetailsVO(String username) {
+//        // get user info by username
+//        User user = this.getUserByUsername(username);
+//        // get user roles by user id
+//        Set<Role> roleSet = roleService.roleListByUsername(user.getId());
+//        return new UserDetailsVO().setUser(user).setRoles(roleSet);
+//    }
 
     @Override
     public ResultVO<User> getUserById(Long id) {

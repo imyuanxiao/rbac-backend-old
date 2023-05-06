@@ -1,8 +1,10 @@
 package com.imyuanxiao.rbac.config;
 
-import com.imyuanxiao.rbac.security.AuthFilter;
+
+import com.imyuanxiao.rbac.security.LoginFilter;
 import com.imyuanxiao.rbac.security.MyDeniedHandler;
-import com.imyuanxiao.rbac.service.UserService;
+import com.imyuanxiao.rbac.security.MyEntryPoint;
+import com.imyuanxiao.rbac.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +19,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsUtils;
 
@@ -32,14 +33,18 @@ import org.springframework.web.cors.CorsUtils;
 //@EnableGlobalMethodSecurity(prePostEnabled = true)	// 启用方法级别的权限认证
 public class SpringSecurityConfig {
 
-    @Autowired
-    private AuthFilter jwtAuthFiler;
+//    @Autowired
+//    private AuthFilter authFilter;
 
     @Autowired
-    private UserService userService;
+    private LoginFilter loginFilter;
+
+    @Autowired
+    private UserServiceImpl userService;
 
 //    private final AuthenticationProvider authenticationProvider;
-
+    @Autowired
+    private UserServiceImpl userDetailsService;
 
     @Bean
     @Lazy
@@ -68,7 +73,7 @@ public class SpringSecurityConfig {
 //        http.addFilterBefore(jwtAuthFiler, UsernamePasswordAuthenticationFilter.class);
         // 将我们自定义的认证过滤器替换掉默认的认证过滤器
         http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
+//        http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
 
         return http.build();
     }
@@ -77,7 +82,7 @@ public class SpringSecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService::getUserDetailsVO);
+        provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
