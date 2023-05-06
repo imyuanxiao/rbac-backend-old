@@ -48,36 +48,6 @@ public final class JwtManager {
         return "Bearer " + JWTUtil.createToken(map, secretKeyBytes);
     }
 
-//    /**
-//     * 解析JWT
-//     *
-//     * @param token JWT字符串
-//     * @return 解析成功返回JWT对象，解析失败返回null
-//     */
-//    public static JWT verify(String token) {
-//        // 如果是空字符串直接返回null
-//        if(StrUtil.isBlank(token)){
-//            return null;
-//        }
-//        JWT jwt = null;
-//        // 解析失败了会抛出异常，所以要捕捉一下。token过期、token非法都会导致解析失败
-//        try {
-//            // 解析（包含验证签名）
-//            jwt = JWTUtil.parseToken(token);
-//
-//            // 验证算法和时间
-//            JWTValidator validator = JWTValidator.of(jwt);
-//            // 验证算法
-//            validator.validateAlgorithm(JWTSignerUtil.hs256(secretKeyBytes));
-//            // 验证时间
-//            JWTValidator.of(jwt).validateDate();
-//        } catch (Exception e) {
-//            log.error("token解析和验证失败");
-//            return null;
-//        }
-//        return jwt;
-//    }
-
     /**
      * 验证token，验证失败会抛出异常
      *
@@ -90,7 +60,7 @@ public final class JwtManager {
             //验证签名
             boolean verify = JWTUtil.verify(token, JWTSignerUtil.hs256(secretKeyBytes));
             if(!verify) {
-                throw new ApiException(ResultCode.VALIDATE_FAILED);
+                throw new RuntimeException("签名验证失败！");
             }
             // 验证算法和时间
             JWTValidator validator = JWTValidator.of(token);
@@ -100,14 +70,10 @@ public final class JwtManager {
             JWTValidator.of(token).validateDate();
         } catch (Exception e) {
             log.error("token验证失败:" + e.getMessage());
-            throw new ApiException(ResultCode.VALIDATE_FAILED);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
-//    public static boolean isValidToken(String token, UserDetailsVO userDetails){
-//        final String username = extractUsername(token);
-//        return(username.equals(userDetails.getUsername()) && isVerifiedToken(token));
-//    }
 
     /**
      * 解析JWT

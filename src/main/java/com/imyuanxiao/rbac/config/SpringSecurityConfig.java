@@ -1,6 +1,7 @@
 package com.imyuanxiao.rbac.config;
 
 
+import com.imyuanxiao.rbac.security.AuthFilter;
 import com.imyuanxiao.rbac.security.LoginFilter;
 import com.imyuanxiao.rbac.security.MyDeniedHandler;
 import com.imyuanxiao.rbac.security.MyEntryPoint;
@@ -8,7 +9,6 @@ import com.imyuanxiao.rbac.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsUtils;
 
@@ -28,7 +29,7 @@ import org.springframework.web.cors.CorsUtils;
  * @Date: 2023/5/3 15:35
  */
 @Configuration
-@EnableWebSecurity	// 添加 security 过滤器
+@EnableWebSecurity
 public class SpringSecurityConfig {
 
     @Autowired
@@ -36,15 +37,16 @@ public class SpringSecurityConfig {
     @Autowired
     private LoginFilter loginFilter;
 
+    @Autowired
+    private AuthFilter authFilter;
+
     @Bean
-    @Lazy
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 关闭csrf和frameOptions，如果不关闭会影响前端请求接口
         http.csrf().disable();
         http.headers().frameOptions().disable();
         // 开启跨域以便前端调用接口
         http.cors();
-
         // 这是配置的关键，决定哪些接口开启防护，哪些接口绕过防护
         http.authorizeRequests()
                 // 注意这里，是允许前端跨域联调的一个必要配置
@@ -55,17 +57,15 @@ public class SpringSecurityConfig {
                 .antMatchers("/**").authenticated()
                 // 指定认证错误处理器
                 .and().exceptionHandling().authenticationEntryPoint(new MyEntryPoint()).accessDeniedHandler(new MyDeniedHandler());
-
         //禁用session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        // 将我们自定义的认证过滤器替换掉默认的认证过滤器
+        // 将自定义的认证过滤器替换掉默认的认证过滤器
         http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
-//        http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
+        http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
+
 
         return http.build();
     }
-
 
     @Bean
     public AuthenticationProvider authenticationProvider(){

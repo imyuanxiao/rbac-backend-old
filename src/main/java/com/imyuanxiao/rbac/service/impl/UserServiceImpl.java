@@ -19,6 +19,7 @@ import com.imyuanxiao.rbac.mapper.UserMapper;
 import com.imyuanxiao.rbac.security.JwtManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
 * @author Administrator
@@ -105,7 +107,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public User getUserByUsername(String username) {
         if(StrUtil.isBlank(username)){
-            throw new ApiException(ResultCode.VALIDATE_FAILED);
+            throw new UsernameNotFoundException("没有找到该用户");
         }
         return this.lambdaQuery().eq(User::getUsername, username).one();
     }
@@ -114,9 +116,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // get user info by username
         User user = this.getUserByUsername(username);
-        // get user roles by user id
-        Set<Role> roleSet = roleService.getRolesByUserId(user.getId());
-        return new UserDetailsVO().setUser(user).setRoles(roleSet);
+        // 先将该用户所拥有的资源id全部查询出来，再转换成`SimpleGrantedAuthority`权限对象
+        Set<SimpleGrantedAuthority> authorities = permissionService.getIdsByUserId(user.getId())
+                .stream()
+                .map(String::valueOf)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toSet());
+        return new UserDetailsVO(user, authorities);
     }
 
 }

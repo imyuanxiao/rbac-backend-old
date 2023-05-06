@@ -4,7 +4,9 @@ import com.imyuanxiao.rbac.annotation.ExceptionCode;
 import com.imyuanxiao.rbac.enums.ResultCode;
 import com.imyuanxiao.rbac.exception.ApiException;
 import com.imyuanxiao.rbac.model.vo.ResultVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +16,7 @@ import java.lang.reflect.Field;
  * @Author: imyuanxiao
  * @Date: 2023/5/3 9:22
  */
+@Slf4j
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 

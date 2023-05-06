@@ -28,7 +28,7 @@ public class Permission extends BaseEntity implements Serializable {
      * permissionType, 0-view, 1-action
      */
     @TableField(value = "type")
-    private String type;
+    private Integer type;
 
     /**
      * permissionUrl

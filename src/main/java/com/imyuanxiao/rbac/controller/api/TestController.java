@@ -21,9 +21,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/test")
 public class TestController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    @ApiOperation(value = "测试有权限1001")
+    @GetMapping("/1")
+    public String testHasAuth() {
+        return "测试成功，你有权限";
+    }
 
+    @ApiOperation(value = "测试无权限1002")
+    @GetMapping("/2")
+    public String testNoAuth() {
+        return "测试成功，你有权限";
+    }
 
     @ApiOperation(value = "根据传入参数生成token")
     @GetMapping("/token-generate/{username}")
@@ -47,17 +55,5 @@ public class TestController {
         return "当前用户为：" + userName;
     }
 
-    @ApiOperation(value = "测试srping security身份验证")
-    @PostMapping
-    public String testLogin(@RequestBody LoginParam loginParam){
-        // 生成一个包含账号密码的认证信息
-        Authentication token = new UsernamePasswordAuthenticationToken(loginParam.getUsername(), loginParam.getPassword());
-        // AuthenticationManager校验这个认证信息，返回一个已认证的Authentication
-        Authentication authentication = authenticationManager.authenticate(token);
-        // 将返回的Authentication存到上下文中
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "登录成功";
-
-    }
 
 }

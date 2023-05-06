@@ -67,7 +67,6 @@ public class AuthController {
         return userService.register(param);
     }
 
-
     public void checkValidationForRegister(RegisterParam param){
         if(StrUtil.isBlank(param.getPhone())){
             throw new ApiException(ResultCode.VALIDATE_FAILED, "手机号为空或格式不正确！");
