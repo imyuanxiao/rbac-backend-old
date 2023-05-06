@@ -1,8 +1,6 @@
 package com.imyuanxiao.rbac.security;
 
 import cn.hutool.core.util.StrUtil;
-import com.imyuanxiao.rbac.model.vo.UserDetailsVO;
-import com.imyuanxiao.rbac.service.UserService;
 import com.imyuanxiao.rbac.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

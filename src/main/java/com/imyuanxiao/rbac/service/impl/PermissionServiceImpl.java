@@ -1,13 +1,11 @@
 package com.imyuanxiao.rbac.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.imyuanxiao.rbac.model.entity.Permission;
-import com.imyuanxiao.rbac.model.entity.User;
 import com.imyuanxiao.rbac.service.PermissionService;
 import com.imyuanxiao.rbac.mapper.PermissionMapper;
-import com.imyuanxiao.rbac.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,18 +29,24 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
     @Override
-    public void insertResources(Collection<Permission> resources) {
-
+    public void insertPermissions(Collection<Permission> resources) {
+        if(CollectionUtil.isEmpty(resources)){
+            return;
+        }
+        baseMapper.insertPermissions(resources);
     }
 
     @Override
-    public void deleteResourceByType(int type) {
-
+    public void deletePermissionByType(int type) {
+        // 先删除所有接口类型的资源
+        LambdaUpdateWrapper<Permission> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Permission::getType, type);
+        baseMapper.delete(wrapper);
     }
 
     @Override
-    public List<Permission> getResourcesByUserId(Long userId) {
-        return null;
+    public List<Permission> getPermissionsByUserId(Long userId) {
+        return baseMapper.selectListByUserId(userId);
     }
 
 

@@ -99,19 +99,19 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         permissionMapper.insertPermissionsByRoleId(role.getId(), param.getPermissionIds());
     }
 
-//    @Override
-//    public boolean removeByIds(Collection<? extends Serializable> idList) {
-//        if (CollectionUtil.isEmpty(idList)) {
-//            return false;
-//        }
-//        // 删除角色下所属的权限
-//        for (Serializable roleId : idList) {
-//            permissionMapper.deleteByRoleId(roleId);
-//        }
-//        // 删除角色
-//        baseMapper.deleteBatchIds(idList);
-//        return true;
-//    }
+    @Override
+    public boolean removeByIds(Collection<?> idList) {
+        if (CollectionUtil.isEmpty(idList)) {
+            return false;
+        }
+        // 删除角色下所属的权限
+        for (Object roleId : idList) {
+            permissionMapper.deleteByRoleId((int)roleId);
+        }
+        // 删除角色
+        baseMapper.deleteBatchIds(idList);
+        return true;
+    }
 
 }
 

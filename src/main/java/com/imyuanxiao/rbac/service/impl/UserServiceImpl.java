@@ -5,7 +5,6 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.imyuanxiao.rbac.enums.ResultCode;
 import com.imyuanxiao.rbac.exception.ApiException;
-import com.imyuanxiao.rbac.model.entity.Role;
 import com.imyuanxiao.rbac.model.entity.User;
 import com.imyuanxiao.rbac.model.param.LoginParam;
 import com.imyuanxiao.rbac.model.param.RegisterParam;
@@ -93,15 +92,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         } catch (Exception e) {
             throw new ApiException(ResultCode.FAILED, "手机号已被使用！");
         }
-    }
-
-    @Override
-    public ResultVO<User> getUserById(Long id) {
-        User user = this.getById(id);
-        if(user == null){
-            return new ResultVO<>(ResultCode.FAILED, null);
-        }
-        return new ResultVO<>(user);
     }
 
     @Override

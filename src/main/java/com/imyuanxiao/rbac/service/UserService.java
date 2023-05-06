@@ -15,13 +15,6 @@ import com.imyuanxiao.rbac.model.vo.UserVO;
 */
 public interface UserService extends IService<User> {
 
-    /**
-     * 登录
-     * @param id 用户ID
-     * @return 登录成功则返回vo对象，失败则抛出异常
-     */
-    ResultVO<User> getUserById(Long id);
-
 
     User getUserByUsername(String username);
 

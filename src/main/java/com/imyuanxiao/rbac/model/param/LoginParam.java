@@ -3,7 +3,6 @@ package com.imyuanxiao.rbac.model.param;
 import com.imyuanxiao.rbac.annotation.ExceptionCode;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 

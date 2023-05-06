@@ -1,19 +1,12 @@
 package com.imyuanxiao.rbac.model.vo;
 
-import com.imyuanxiao.rbac.model.entity.Role;
 import com.imyuanxiao.rbac.model.entity.User;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 自定义用户对象

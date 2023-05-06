@@ -24,20 +24,20 @@ public interface PermissionService extends IService<Permission> {
      * 批量新增接口类型的资源
      * @param resources 资源对象集合
      */
-    void insertResources(Collection<Permission> resources);
+    void insertPermissions(Collection<Permission> resources);
 
     /**
      * 根据类型删除资源
      * @param type 资源类型，0为页面权限，1为操作权限
      */
-    void deleteResourceByType(int type);
+    void deletePermissionByType(int type);
 
     /**
      * 根据用户id获取该用户的所有权限资源对象
      * @param userId 用户id
      * @return 权限资源集合
      */
-    List<Permission> getResourcesByUserId(Long userId);
+    List<Permission> getPermissionsByUserId(Long userId);
 
 
 }
