@@ -1,8 +1,12 @@
 package com.imyuanxiao.rbac.model.vo;
 
+import com.imyuanxiao.rbac.model.entity.Role;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -26,8 +30,13 @@ public class UserVO {
      */
     private String token;
     /**
+     * 当前用户的角色
+     */
+    private Set<Role> roles;
+    /**
      * 当前用户的权限资源id集合
      */
     private Set<Long> permissionIds;
+
 
 }

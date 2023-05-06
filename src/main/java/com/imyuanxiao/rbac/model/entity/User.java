@@ -8,8 +8,12 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import lombok.Data;
+import lombok.experimental.Accessors;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @Author imyuanxiao
@@ -17,8 +21,8 @@ import lombok.Data;
  */
 @TableName(value ="user")
 @Data
+@Accessors(chain = true)
 public class User extends BaseEntity  implements Serializable {
-
 
     /**
      * username, unique
@@ -121,4 +125,5 @@ public class User extends BaseEntity  implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
 }

@@ -3,6 +3,8 @@ package com.imyuanxiao.rbac.service;
 import com.imyuanxiao.rbac.model.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Set;
+
 /**
 * @author Administrator
 * @description 针对表【role】的数据库操作Service
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface RoleService extends IService<Role> {
 
+    Set<Role> roleListByUsername(Long id);
 }
