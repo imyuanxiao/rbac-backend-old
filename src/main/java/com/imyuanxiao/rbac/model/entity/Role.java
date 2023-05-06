@@ -9,6 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @Author imyuanxiao
@@ -16,6 +17,7 @@ import lombok.Data;
  */
 @TableName(value ="role")
 @Data
+@Accessors(chain = true)
 public class Role  extends BaseEntity implements Serializable {
 
     /**

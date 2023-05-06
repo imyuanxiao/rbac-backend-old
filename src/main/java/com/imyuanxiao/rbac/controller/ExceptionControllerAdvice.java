@@ -17,13 +17,26 @@ import java.lang.reflect.Field;
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
+    /**
+     * 处理自定义的ApiException异常
+     * @author imyuanxiao
+     * @date 20:33 2023/5/6
+     * @param e
+     * @return com.imyuanxiao.rbac.model.vo.ResultVO<java.lang.String>
+     **/
     @ExceptionHandler(ApiException.class)
     public ResultVO<String> APIExceptionHandler(ApiException e) {
         // 返回自定义异常提示信息
         return new ResultVO<>(e.getResultCode(), e.getMsg());
     }
 
-
+    /**
+     *
+     * @author imyuanxiao
+     * @date 20:33 2023/5/6
+     * @param e
+     * @return com.imyuanxiao.rbac.model.vo.ResultVO<java.lang.String>
+     **/
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResultVO<String> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e)
             throws NoSuchFieldException{
@@ -38,10 +51,22 @@ public class ExceptionControllerAdvice {
 
         if(annotation != null){
             return new ResultVO<>(annotation.value(), annotation.message(), defaultMessage);
-//            return new ResultVO<>(annotation, defaultMessage);
         }
 
         return new ResultVO<>(ResultCode.VALIDATE_FAILED, defaultMessage);
+    }
+
+    /**
+     * 封装处理运行时发生的其他异常
+     * @author imyuanxiao
+     * @date 20:32 2023/5/6
+     * @param e
+     * @return com.imyuanxiao.rbac.model.vo.ResultVO<java.lang.String>
+     **/
+    @ExceptionHandler(RuntimeException.class)
+    public ResultVO<String> runtimeExceptionHandler(RuntimeException e) {
+        // 返回自定义异常提示信息
+        return new ResultVO<>(ResultCode.ERROR, "系统异常，请稍后重试");
     }
 
 }

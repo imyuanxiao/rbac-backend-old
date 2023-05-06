@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,6 +28,21 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     @Override
     public Set<Long> getIdsByUserId(Long userId) {
         return baseMapper.selectIdsByUserId(userId);
+    }
+
+    @Override
+    public void insertResources(Collection<Permission> resources) {
+
+    }
+
+    @Override
+    public void deleteResourceByType(int type) {
+
+    }
+
+    @Override
+    public List<Permission> getResourcesByUserId(Long userId) {
+        return null;
     }
 
 

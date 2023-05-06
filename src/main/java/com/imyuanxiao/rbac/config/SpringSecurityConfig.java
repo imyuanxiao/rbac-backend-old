@@ -29,22 +29,12 @@ import org.springframework.web.cors.CorsUtils;
  */
 @Configuration
 @EnableWebSecurity	// 添加 security 过滤器
-//@RequiredArgsConstructor // 自动创建需要的成员变量构造器
-//@EnableGlobalMethodSecurity(prePostEnabled = true)	// 启用方法级别的权限认证
 public class SpringSecurityConfig {
 
-//    @Autowired
-//    private AuthFilter authFilter;
-
-    @Autowired
-    private LoginFilter loginFilter;
-
-    @Autowired
-    private UserServiceImpl userService;
-
-//    private final AuthenticationProvider authenticationProvider;
     @Autowired
     private UserServiceImpl userDetailsService;
+    @Autowired
+    private LoginFilter loginFilter;
 
     @Bean
     @Lazy
@@ -60,7 +50,7 @@ public class SpringSecurityConfig {
                 // 注意这里，是允许前端跨域联调的一个必要配置
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 // 指定某些接口不需要通过验证即可访问。像登陆、注册接口肯定是不需要认证的
-                .antMatchers("/login/**").permitAll()
+                .antMatchers("/login/**", "/auth/**").permitAll()
                 // 这里意思是其它所有接口需要认证才能访问
                 .antMatchers("/**").authenticated()
                 // 指定认证错误处理器
@@ -69,8 +59,6 @@ public class SpringSecurityConfig {
         //禁用session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-//        // 将我们自定义的认证过滤器替换掉默认的认证过滤器
-//        http.addFilterBefore(jwtAuthFiler, UsernamePasswordAuthenticationFilter.class);
         // 将我们自定义的认证过滤器替换掉默认的认证过滤器
         http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
 //        http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
