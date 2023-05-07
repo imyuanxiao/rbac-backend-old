@@ -50,10 +50,10 @@ public interface PermissionMapper extends BaseMapper<Permission> {
 
     /**
      * 批量新增权限资源
-     * @param resources 资源对象集合
+     * @param permissions 资源对象集合
      * @return 受影响的行数
      */
-    int insertPermissions(@Param("resources") Collection<Permission> resources);
+    int insertPermissions(@Param("permissions") Collection<Permission> permissions);
 
     /**
      * 根据用户id获取该用户的所有权限资源对象

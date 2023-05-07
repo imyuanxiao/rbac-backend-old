@@ -24,6 +24,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/permission")
+@Auth(id = 3000, name = "权限管理")
 @Api(tags = "Permission Management Interface")
 public class PermissionController {
 
@@ -31,7 +32,7 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @GetMapping("/list")
-    @Auth(id = 20, name = "查询所有权限信息")
+    @Auth(id = 1, name = "查询所有权限信息")
     @ApiOperation(value = "Get all permissions")
     public List<Permission> getPermissionList() {
         return permissionService.list();

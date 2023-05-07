@@ -31,11 +31,11 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
     @Override
-    public void insertPermissions(Collection<Permission> resources) {
-        if(CollectionUtil.isEmpty(resources)){
+    public void insertPermissions(Collection<Permission> permissions) {
+        if(CollectionUtil.isEmpty(permissions)){
             return;
         }
-        baseMapper.insertPermissions(resources);
+        baseMapper.insertPermissions(permissions);
     }
 
     @Override

@@ -24,7 +24,7 @@
 
     <!--批量新增权限资源-->
     <insert id="insertPermissions">
-        insert into resource(id, path, name, type) values
+        insert into permission(id, url, name, type) values
         <foreach collection="permissions" separator="," item="permission">
             (#{permission.id}, #{permission.url}, #{permission.name}, #{permission.type})
         </foreach>

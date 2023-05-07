@@ -36,6 +36,7 @@ import static com.imyuanxiao.rbac.util.CommonUtil.ACTION_SUCCESSFUL;
 @Slf4j
 @RestController
 @RequestMapping("/user")
+@Auth(id = 1000, name = "用户管理")
 @Api(tags = "User Management Interface")
 public class UserController {
 

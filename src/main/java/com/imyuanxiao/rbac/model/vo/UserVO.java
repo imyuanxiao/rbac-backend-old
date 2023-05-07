@@ -23,7 +23,7 @@ public class UserVO {
 
     private String token;
 
-    private Set<Role> roles;
+//    private Set<Role> roles;
 
     private Set<Long> permissionIds;
 

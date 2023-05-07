@@ -1,13 +1,11 @@
 package com.imyuanxiao.rbac.controller.api;
 
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.core.util.StrUtil;
-import com.imyuanxiao.rbac.enums.ResultCode;
-import com.imyuanxiao.rbac.exception.ApiException;
 import com.imyuanxiao.rbac.model.param.LoginParam;
 import com.imyuanxiao.rbac.model.param.RegisterParam;
 import com.imyuanxiao.rbac.model.vo.UserVO;
 import com.imyuanxiao.rbac.service.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,33 +26,34 @@ import javax.validation.constraints.NotBlank;
 @Validated
 @RestController
 @RequestMapping("/auth")
+@Api(tags = "Auth Management Interface")
 public class AuthController {
 
     @Autowired
     private UserService userService;
 
     /**
-     * 登录
+     * Log in
      * @author imyuanxiao
      * @date 11:46 2023/5/7
-     * @param param 登录表单参数
-     * @return com.imyuanxiao.rbac.model.vo.UserVO
+     * @param param login-related parameters
+     * @return User Value Object
      **/
-    @ApiOperation(value = "Login by password")
     @PostMapping("/login")
+    @ApiOperation(value = "Login by password")
     public UserVO login(@RequestBody  @Valid LoginParam param){
         return userService.login(param);
     }
 
     /**
-     * 发送验证码
+     * Send verification code
      * @author imyuanxiao
      * @date 11:46 2023/5/7
-     * @param phone 手机号
-     * @return java.lang.String
+     * @param phone phone number
+     * @return show code in frontend (actually should be void)
      **/
-    @ApiOperation(value = "Get Verification Code")
     @GetMapping("/code/{phone}")
+    @ApiOperation(value = "Get Verification Code")
     public String sendCode(@PathVariable("phone") @NotBlank String phone){
         //TODO check whethere this is code for this phone in redis
 
@@ -68,19 +67,18 @@ public class AuthController {
     }
 
     /**
-     * 注册
+     * Registration
      * @author imyuanxiao
      * @date 19:00 2023/5/6
-     * @param param 注册表单参数
-     * @return com.imyuanxiao.rbac.model.vo.UserVO
+     * @param param registration-related parameters
+     * @return User Value Object
      **/
-    @ApiOperation(value = "Register")
     @PostMapping("/register")
+    @ApiOperation(value = "Register by phone")
     public UserVO register(@RequestBody @Valid RegisterParam param){
         //TODO get Code from redis according to phone
         //TODO verify code and phone
         return userService.register(param);
     }
-
 
 }

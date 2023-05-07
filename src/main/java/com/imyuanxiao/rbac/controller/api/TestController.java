@@ -2,6 +2,7 @@ package com.imyuanxiao.rbac.controller.api;
 
 import com.imyuanxiao.rbac.context.UserContext;
 import com.imyuanxiao.rbac.security.JwtManager;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +18,16 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/test")
+@Api(tags = "Test Interface")
 public class TestController {
 
-    @ApiOperation(value = "测试有权限1001")
     @GetMapping("/1")
+    @ApiOperation(value = "测试有权限")
     public String testHasAuth() {
         return "测试成功，你有权限";
     }
 
-    @ApiOperation(value = "测试无权限1002")
+    @ApiOperation(value = "测试无权限")
     @GetMapping("/2")
     public String testNoAuth() {
         return "测试成功，你有权限";
