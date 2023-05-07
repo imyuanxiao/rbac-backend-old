@@ -1,6 +1,5 @@
 package com.imyuanxiao.rbac.controller.api;
 
-import com.imyuanxiao.rbac.context.UserContext;
 import com.imyuanxiao.rbac.security.JwtManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,14 +44,6 @@ public class TestController {
     public String testTokenVerify() {
         // 解析成功就执行业务逻辑返回数据
         return "api成功返回数据";
-    }
-
-    @ApiOperation(value = "测试上下文对象")
-    @GetMapping("/context")
-    public String testUsercontext() {
-        // token解析成功，会把解析出的用户放入userContext
-        String userName = UserContext.get();
-        return "当前用户为：" + userName;
     }
 
 

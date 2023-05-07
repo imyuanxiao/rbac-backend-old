@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 
 /**
  * @ClassName ExceptionControllerAdvice
- * @Description 全局异常处理
+ * @Description Global exception handler
  * @Author imyuanxiao
  * @Date 2023/5/3 9:22
  * @Version 1.0
@@ -26,11 +26,11 @@ public class ExceptionControllerAdvice {
      * 处理自定义的ApiException异常
      * @author imyuanxiao
      * @date 20:33 2023/5/6
-     * @param e
-     * @return com.imyuanxiao.rbac.model.vo.ResultVO<java.lang.String>
+     * @param e ApiException
+     * @return ResultVO with error message
      **/
     @ExceptionHandler(ApiException.class)
-    public ResultVO<String> APIExceptionHandler(ApiException e) {
+    public ResultVO<String> apiExceptionHandler(ApiException e) {
         // 返回自定义异常提示信息
         return new ResultVO<>(e.getResultCode(), e.getMsg());
     }
@@ -39,8 +39,8 @@ public class ExceptionControllerAdvice {
      *
      * @author imyuanxiao
      * @date 20:33 2023/5/6
-     * @param e
-     * @return com.imyuanxiao.rbac.model.vo.ResultVO<java.lang.String>
+     * @param e MethodArgumentNotValidException
+     * @return ResultVO with error message
      **/
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResultVO<String> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e)
@@ -65,8 +65,8 @@ public class ExceptionControllerAdvice {
      * 封装处理运行时发生的其他异常
      * @author imyuanxiao
      * @date 20:32 2023/5/6
-     * @param e
-     * @return com.imyuanxiao.rbac.model.vo.ResultVO<java.lang.String>
+     * @param e RuntimeException
+     * @return ResultVO with error message
      **/
     @ExceptionHandler(RuntimeException.class)
     public ResultVO<String> runtimeExceptionHandler(RuntimeException e) {
