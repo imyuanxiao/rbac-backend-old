@@ -9,18 +9,18 @@ import java.util.Set;
 
 /**
  * @ClassName RoleParam
- * @Description 接收角色相关参数
+ * @Description Receive role-related parameters.
  * @Author imyuanxiao
  * @Date 2023/5/6 19:13
  * @Version 1.0
  **/
 @Data
 public class RoleParam {
-    @NotNull(message = "角色id不能为空", groups = UpdateResources.class)
+    @NotNull(message = "User ID is required", groups = UpdateResources.class)
     private Long id;
 
-    @NotBlank(message = "管理员名称不能为空", groups = CreateRole.class)
-    @Length(min = 1, max = 12, message = "用户名长度不能超过12位", groups = CreateRole.class)
+    @NotBlank(message = "Role name is required", groups = CreateRole.class)
+    @Length(min = 1, max = 12, message = "Role name must be between 1 and 12 characters in length.", groups = CreateRole.class)
     private String name;
 
     private Set<Long> permissionIds;

@@ -32,12 +32,27 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * 登录
+     * @author imyuanxiao
+     * @date 11:46 2023/5/7
+     * @param param 登录表单参数
+     * @return com.imyuanxiao.rbac.model.vo.UserVO
+     **/
     @ApiOperation(value = "Login by password")
     @PostMapping("/login")
     public UserVO login(@RequestBody  @Valid LoginParam param){
         return userService.login(param);
     }
 
+    /**
+     * 发送验证码
+     * @author imyuanxiao
+     * @date 11:46 2023/5/7
+     * @param phone 手机号
+     * @return java.lang.String
+     **/
     @ApiOperation(value = "Get Verification Code")
     @GetMapping("/code/{phone}")
     public String sendCode(@PathVariable("phone") @NotBlank String phone){
@@ -53,11 +68,10 @@ public class AuthController {
     }
 
     /**
-     * 验证手机号和验证码
-     *
+     * 注册
      * @author imyuanxiao
      * @date 19:00 2023/5/6
-     * @param param
+     * @param param 注册表单参数
      * @return com.imyuanxiao.rbac.model.vo.UserVO
      **/
     @ApiOperation(value = "Register")
@@ -65,20 +79,8 @@ public class AuthController {
     public UserVO register(@RequestBody @Valid RegisterParam param){
         //TODO get Code from redis according to phone
         //TODO verify code and phone
-        checkValidationForRegister(param);
         return userService.register(param);
     }
 
-    public void checkValidationForRegister(RegisterParam param){
-        if(StrUtil.isBlank(param.getPhone())){
-            throw new ApiException(ResultCode.VALIDATE_FAILED, "手机号为空或格式不正确！");
-        }
-        if(StrUtil.isBlank(param.getPassword())){
-            throw new ApiException(ResultCode.VALIDATE_FAILED, "密码为空或格式不正确！");
-        }
-        if(StrUtil.isBlank(param.getCode())){
-            throw new ApiException(ResultCode.VALIDATE_FAILED, "验证码为空或格式不正确！");
-        }
-    }
 
 }

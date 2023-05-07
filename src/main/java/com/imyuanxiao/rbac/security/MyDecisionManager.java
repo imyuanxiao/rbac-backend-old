@@ -14,7 +14,7 @@ import java.util.Objects;
 
 /**
  * @ClassName MyDecisionManager
- * @Description 决定当前用户是否有该请求权限
+ * @Description Determine if the current user has permission to access the requested permission.
  * @Author imyuanxiao
  * @Date 2023/5/6 11:15
  * @Version 1.0

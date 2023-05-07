@@ -20,7 +20,7 @@ import java.io.IOException;
 
 /**
  * @ClassName LoginFilter
- * @Description 认证过滤器
+ * @Description Authentication filter
  * @Author imyuanxiao
  * @Date 2023/5/6 11:07
  * @Version 1.0

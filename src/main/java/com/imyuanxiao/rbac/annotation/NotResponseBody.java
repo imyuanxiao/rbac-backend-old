@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * @ClassName NotResponseBody
- * @Description 用于绕过数据统一响应
+ * @Description Used to bypass the unified response body.
  * @Author: imyuanxiao
  * @Date: 2023/5/3 10:25
  * @Version 1.0

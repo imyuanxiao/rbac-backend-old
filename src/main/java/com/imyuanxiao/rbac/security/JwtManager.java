@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * @ClassName JwtManager
- * @Description jwt token 生成管理工具
+ * @Description Generation and management util for jwt token
  * @Author imyuanxiao
  * @Date 2023/5/3 16:23
  * @Version 1.0
@@ -18,22 +18,24 @@ import java.util.Map;
 @Slf4j
 public final class JwtManager {
     /**
-     * 这个秘钥是防止JWT被篡改的关键，随便写什么都好，但决不能泄露
+     * This secret key is crucial to prevent tampering of the JWT.
      */
     private final static byte[] secretKeyBytes = "my_secret_key".getBytes();
 
 
     /**
-     * 过期时间目前设置成30分钟，这个配置随业务需求而定
+     * The expiration time is currently set to 30 minutes,
+     * this configuration depends on business requirements.
      */
     private final static Integer EXPIRATION = 30;
 
     /**
-     * 生成JWT
-     *
-     * @param userName 用户名
-     * @return JWTtoken
-     */
+     * Generate jwt token
+     * @author imyuanxiao
+     * @date 14:54 2023/5/7
+     * @param userName username
+     * @return jwt token
+     **/
     public static String generate(String userName) {
         DateTime now = DateUtil.date();
         DateTime ddl = DateUtil.offsetMinute(now, EXPIRATION);
@@ -42,25 +44,26 @@ public final class JwtManager {
                 put(JWTPayload.ISSUED_AT, now);
                 put(JWTPayload.EXPIRES_AT, ddl);
                 put(JWTPayload.NOT_BEFORE, now);
-                put(JWTPayload.SUBJECT, userName); //把用户名放到sub字段
+                put(JWTPayload.SUBJECT, userName); //put username in 'sub'
             }
         };
         return "Bearer " + JWTUtil.createToken(map, secretKeyBytes);
     }
 
     /**
-     * 验证token，验证失败会抛出异常
-     *
-     * @param token JWT字符串
-     *
-     */
+     * Verify token
+     * @author imyuanxiao
+     * @date 14:54 2023/5/7
+     * @param token jwt token
+     * @throws RuntimeException Throw an exception if verification fails.
+     **/
     public static void verifyToken(String token) {
         // 解析失败了会抛出异常，所以要捕捉一下。token过期、token非法都会导致解析失败
         try {
             //验证签名
             boolean verify = JWTUtil.verify(token, JWTSignerUtil.hs256(secretKeyBytes));
             if(!verify) {
-                throw new RuntimeException("签名验证失败！");
+                throw new RuntimeException("Signature verification failed.");
             }
             // 验证算法和时间
             JWTValidator validator = JWTValidator.of(token);
@@ -69,18 +72,18 @@ public final class JwtManager {
             // 验证时间
             JWTValidator.of(token).validateDate();
         } catch (Exception e) {
-            log.error("token验证失败:" + e.getMessage());
+            log.error("Signature verification failed:" + e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
     }
 
-
     /**
-     * 解析JWT
-     *
-     * @param token JWT字符串
-     * @return 解析成功返回JWTPayload对象，解析失败抛出异常
-     */
+     * Parse token
+     * @author imyuanxiao
+     * @date 14:56 2023/5/7
+     * @param token token to parse
+     * @return Parse the JWT token to a JWTPayload object if successful
+     **/
     private static Claims extractAllClaims(String token) {
         verifyToken(token);
         return JWTUtil.parseToken(token).getPayload();
@@ -92,6 +95,14 @@ public final class JwtManager {
      * @param token JWT字符串
      * @return 解析成功返回username，解析失败抛出异常
      */
+
+    /**
+     * Extract username from token
+     * @author imyuanxiao
+     * @date 14:56 2023/5/7
+     * @param token token to parse
+     * @return Return username if successful
+     **/
     public static String extractUsername(String token) {
         Claims claims = extractAllClaims(token);
         return String.valueOf(claims.getClaim(JWTPayload.SUBJECT));

@@ -13,49 +13,49 @@ import java.util.Set;
 
 /**
  * @ClassName RoleService
- * @Description 针对表【role】的数据库操作Service
+ * @Description Database operation service for table 'role'.
  * @Author imyuanxiao
  * @Date 2023/5/3 21:41
  * @Version 1.0
  **/
 public interface RoleService extends IService<Role> {
     /**
-     * 根据用户id获取角色id
-     * @param userId 用户id
-     * @return 该用户的角色id集合
+     * Get role ID based on user ID.
+     * @param userId User ID
+     * @return Collection of role IDs for this user.
      */
     Set<Long> getIdsByUserId(Long userId);
 
 
     /**
-     * 根据用户id获取角色所有信息（id,name等）
-     * @param userId 用户id
-     * @return 该用户的角色id集合
+     * Get all information about roles based on user ID.
+     * @param userId User ID
+     * @return Collection of Roles for this user.
      */
     Set<Role> getRolesByUserId(Long userId);
 
     /**
-     * 根据用户id删除该用户的所有角色
-     * @param userId 用户id
+     * Delete all roles based on user ID
+     * @param userId User ID
      */
     void removeByUserId(Serializable userId);
 
     /**
-     * 根据用户id批量增加角色
-     * @param userId 用户id
-     * @param roleIds 角色id集合
+     * Batch add roles based on user ID.
+     * @param userId User ID
+     * @param roleIds Collections of role ids
      */
     void insertRolesByUserId(Long userId, Collection<Long> roleIds);
 
     /**
-     * 获取分页信息
-     * @param page 分页参数
-     * @return 分页对象
+     * Get pagination information
+     * @param page Pagination parameters
+     * @return Pagination object
      */
     IPage<RolePageVO> selectPage(Page<RolePageVO> page);
 
     /**
-     * 更新角色权限
+     * Update r
      * @param param 入参
      */
     void updatePermissions(RoleParam param);

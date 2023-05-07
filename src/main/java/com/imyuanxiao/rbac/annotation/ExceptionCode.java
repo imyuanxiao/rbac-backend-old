@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * @ClassName NotResponseBody
- * @Description 自定义注解，用于字段校验
+ * @Description Custom annotation for field validation.
  * @Author: imyuanxiao
  * @Date: 2023/5/3 9:57
  * @Version 1.0
@@ -15,8 +15,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface ExceptionCode {
-    // 响应码code
     int value() default 100000;
-    // 响应信息msg
-    String message() default  "参数校验错误";
+    String message() default  "Parameter validation error.";
 }

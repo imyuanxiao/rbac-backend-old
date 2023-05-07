@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * @ClassName RolePageVO
- * @Description 角色分页对象
+ * @Description Role pagination object.
  * @Author imyuanxiao
  * @Date 2023/5/4 15:18
  * @Version 1.0

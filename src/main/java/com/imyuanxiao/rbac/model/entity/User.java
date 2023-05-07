@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @ClassName User
- * @Description 对应表user的实体类
+ * @Description Entity class corresponding to table 'user'.
  * @TableName user
  * @Author imyuanxiao
  * @Version 1.0

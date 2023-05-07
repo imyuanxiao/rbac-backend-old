@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  * @ClassName Permission
- * @Description 对应表permission的实体类
+ * @Description Entity class corresponding to table 'permission'.
  * @TableName permission
  * @Author imyuanxiao
  * @Version 1.0

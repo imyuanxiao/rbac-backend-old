@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @ClassName Role
- * @Description 对应表role的实体类
+ * @Description Entity class corresponding to table 'role'.
  * @TableName role
  * @Author imyuanxiao
  * @Version 1.0

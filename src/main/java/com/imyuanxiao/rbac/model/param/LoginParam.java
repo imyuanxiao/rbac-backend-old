@@ -7,8 +7,8 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 
 /**
- * @ClassName RegisterParam
- * @Description 接收登录相关参数
+ * @ClassName LoginParam
+ * @Description Receive login-related parameters.
  * @Author imyuanxiao
  * @Date 2023/5/3 0:58
  * @Version 1.0
@@ -16,15 +16,15 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class LoginParam {
 
-    @Length(min = 4, max = 12, message = "用户名长度为4-12位")
-    @ExceptionCode(value = 100001, message = "账号验证错误")
+    @Length(min = 4, max = 20, message = "Username must be between 4-20 characters in length.")
+    @ExceptionCode(value = 100001, message = "Invalid username.")
     private String username;
 
     private String phone;
 
-    @NotBlank(message = "密码不能为空")
-    @Length(min = 4, max = 12, message = "密码长度为4-12位")
-    @ExceptionCode(value = 100003, message = "密码验证错误")
+    @NotBlank(message = "Password is required.")
+    @Length(min = 4, max = 20, message = "Password must be between 4-20 characters in length.")
+    @ExceptionCode(value = 100003, message = "Invalid password.")
     private String password;
 
 }

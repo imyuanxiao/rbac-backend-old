@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @ClassName ResultVO
- * @Description 自定义统一响应体
+ * @Description Customize unified response body.
  * @Author imyuanxiao
  * @Date 2023/5/3 1:07
  * @Version 1.0
@@ -14,15 +14,15 @@ import lombok.Getter;
 @Getter
 public class ResultVO<T> {
     /**
-     * 状态码, 默认1000是成功
+     * Status code
      */
     private int code;
     /**
-     * 响应信息, 来说明响应情况
+     * Response message to indicate response status.
      */
     private String msg;
     /**
-     * 响应的具体数据
+     * Detailed information in response.
      */
     private T data;
 

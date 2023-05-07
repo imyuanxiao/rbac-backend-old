@@ -24,10 +24,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsUtils;
 
 /**
- * 对Spring Security进行自定义配置
+ * @ClassName SpringSecurityConfig
+ * @Description Configuration for spring security
  * @Author: imyuanxiao
  * @Date: 2023/5/3 15:35
- */
+ * @Version 1.0
+ **/
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
@@ -42,27 +44,37 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // 关闭csrf和frameOptions，如果不关闭会影响前端请求接口
+        // Disable csrf and frameOptions, if not, will affect frontend API requests.
         http.csrf().disable();
         http.headers().frameOptions().disable();
-        // 开启跨域以便前端调用接口
+        // Enable cross-origin resource sharing (CORS) to facilitate frontend calls to the API.
         http.cors();
-        // 这是配置的关键，决定哪些接口开启防护，哪些接口绕过防护
+        // This is a key configuration that determines which interfaces are protected and which interfaces bypass protection.
         http.authorizeRequests()
-                // 注意这里，是允许前端跨域联调的一个必要配置
+                // This is an essential configuration that allows cross-domain debugging for frontend developers.
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                // 指定某些接口不需要通过验证即可访问。像登陆、注册接口肯定是不需要认证的
-                .antMatchers("/login/**", "/auth/**").permitAll()
-                // 这里意思是其它所有接口需要认证才能访问
+                // Specifies that certain endpoints can be accessed without authentication.
+                .antMatchers("/login/**",
+                        "/auth/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/swagger-resources/**",
+                        "/images/**",
+                        "/webjars/**",
+                        "/v2/api-docs",
+                        "/configuration/ui",
+                        "/configuration/security"
+                )
+                .permitAll()
+                // All other endpoints require authentication to access.
                 .antMatchers("/**").authenticated()
-                // 指定认证错误处理器
+                // Configure authentication error handler.
                 .and().exceptionHandling().authenticationEntryPoint(new MyEntryPoint()).accessDeniedHandler(new MyDeniedHandler());
-        //禁用session
+        //Disable session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        // 将自定义的认证过滤器替换掉默认的认证过滤器
+        // Replace the default authentication filter with custom ones.
         http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
-
 
         return http.build();
     }
@@ -76,21 +88,24 @@ public class SpringSecurityConfig {
     }
 
     /**
-     * 密码明文加密方式配置
-     * @return
-     */
+     * Configure password encryption method.
+     * @author imyuanxiao
+     * @date 14:42 2023/5/7
+     * @return an encoder
+     **/
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-
     /**
-     * 获取AuthenticationManager（认证管理器），登录时认证使用
-     * @param authenticationConfiguration
-     * @return
-     * @throws Exception
-     */
+     * Get the AuthenticationManager bean.
+     * @author imyuanxiao
+     * @date 14:43 2023/5/7
+     * @param authenticationConfiguration the AuthenticationConfiguration to use
+     * @return the AuthenticationManager
+     * @throws Exception if it fails to get the AuthenticationManager
+     **/
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

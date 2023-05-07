@@ -1,9 +1,12 @@
 package com.imyuanxiao.rbac.context;
 
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/3 20:12
- */
+ * @ClassName UserContext
+ * @Description User context.
+ * @Author imyuanxiao
+ * @Date 2023/5/3 20:12
+ * @Version 1.0
+ **/
 public final class UserContext {
     private static final ThreadLocal<String> USER_HOLDER = new ThreadLocal<String>();
 
@@ -16,7 +19,7 @@ public final class UserContext {
     }
 
     /**
-     * @return 当前登录用户的用户名
+     * @return Username of currently logged-in user.
      */
     public static String get() {
         return USER_HOLDER.get();

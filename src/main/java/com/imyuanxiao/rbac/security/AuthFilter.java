@@ -14,7 +14,7 @@ import java.io.IOException;
 
 /**
  * @ClassName AuthFilter
- * @Description 授权过滤器
+ * @Description Authorization filter
  * @Author imyuanxiao
  * @Date 2023/5/4 22:22
  * @Version 1.0
