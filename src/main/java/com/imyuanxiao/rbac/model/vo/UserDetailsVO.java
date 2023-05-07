@@ -9,10 +9,12 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 
 /**
- * 自定义用户对象
- * @Author: imyuanxiao
- * @Date: 2023/5/4 22:44
- */
+ * @ClassName UserDetailsVO
+ * @Description UserDetails对象，用于spring security
+ * @Author imyuanxiao
+ * @Date 2023/5/4 22:44
+ * @Version 1.0
+ **/
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = false)

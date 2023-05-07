@@ -9,9 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/3 16:23
- */
+ * @ClassName JwtManager
+ * @Description jwt token 生成管理工具
+ * @Author imyuanxiao
+ * @Date 2023/5/3 16:23
+ * @Version 1.0
+ **/
 @Slf4j
 public final class JwtManager {
     /**

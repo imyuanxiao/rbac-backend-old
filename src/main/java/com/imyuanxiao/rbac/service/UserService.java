@@ -9,10 +9,12 @@ import com.imyuanxiao.rbac.model.vo.UserDetailsVO;
 import com.imyuanxiao.rbac.model.vo.UserVO;
 
 /**
-* @author Administrator
-* @description 针对表【user】的数据库操作Service
-* @createDate 2023-05-03 00:42:01
-*/
+ * @ClassName UserService
+ * @Description 针对表【user】的数据库操作Service
+ * @Author imyuanxiao
+ * @Date 2023/5/3 21:42
+ * @Version 1.0
+ **/
 public interface UserService extends IService<User> {
 
 

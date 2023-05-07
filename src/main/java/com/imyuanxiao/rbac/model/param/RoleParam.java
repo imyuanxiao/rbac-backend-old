@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * @ClassName RoleParam
- * @Description TODO
+ * @Description 接收角色相关参数
  * @Author imyuanxiao
  * @Date 2023/5/6 19:13
  * @Version 1.0

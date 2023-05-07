@@ -5,14 +5,14 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-
 
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/3 0:58
- */
-
+ * @ClassName RegisterParam
+ * @Description 接收登录相关参数
+ * @Author imyuanxiao
+ * @Date 2023/5/3 0:58
+ * @Version 1.0
+ **/
 @Data
 public class LoginParam {
 

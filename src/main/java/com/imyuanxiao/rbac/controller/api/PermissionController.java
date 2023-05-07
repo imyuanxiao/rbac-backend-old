@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/4 15:49
- */
+ * @ClassName PermissionController
+ * @Description 权限接口
+ * @Author imyuanxiao
+ * @Date 2023/5/4 15:49
+ * @Version 1.0
+ **/
 @Slf4j
 @RestController
 @RequestMapping("/permission")

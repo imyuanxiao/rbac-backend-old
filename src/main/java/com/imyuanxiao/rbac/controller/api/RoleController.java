@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/4 17:35
- */
+ * @ClassName RoleController
+ * @Description 角色接口
+ * @Author imyuanxiao
+ * @Date 2023/5/4 17:35
+ * @Version 1.0
+ **/
 @Slf4j
 @RestController
 @RequestMapping("role")

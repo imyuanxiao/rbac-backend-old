@@ -26,16 +26,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
-* @author Administrator
-* @description 针对表【user】的数据库操作Service实现
-* @createDate 2023-05-03 00:42:01
-*/
+ * @ClassName UserServiceImpl
+ * @Description 针对表【user】的数据库操作Service实现
+ * @Author imyuanxiao
+ * @Date 2023/5/3 21:42
+ * @Version 1.0
+ **/
 @Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>

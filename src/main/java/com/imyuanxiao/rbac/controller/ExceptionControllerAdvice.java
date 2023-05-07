@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.lang.reflect.Field;
 
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/3 9:22
- */
+ * @ClassName ExceptionControllerAdvice
+ * @Description 全局异常处理
+ * @Author imyuanxiao
+ * @Date 2023/5/3 9:22
+ * @Version 1.0
+ **/
 @Slf4j
 @RestControllerAdvice
 public class ExceptionControllerAdvice {

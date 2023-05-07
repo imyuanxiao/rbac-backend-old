@@ -14,10 +14,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
-* @author Administrator
-* @description 针对表【permission】的数据库操作Service实现
-* @createDate 2023-05-03 00:42:19
-*/
+ * @ClassName PermissionServiceImpl
+ * @Description 针对表【permission】的数据库操作Service实现
+ * @Author imyuanxiao
+ * @Date 2023/5/3 21:42
+ * @Version 1.0
+ **/
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permission>

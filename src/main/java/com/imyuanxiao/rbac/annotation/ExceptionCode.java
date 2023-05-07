@@ -6,10 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 自定义注解，用于字段校验
+ * @ClassName NotResponseBody
+ * @Description 自定义注解，用于字段校验
  * @Author: imyuanxiao
  * @Date: 2023/5/3 9:57
- */
+ * @Version 1.0
+ **/
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface ExceptionCode {

@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/3 16:29
- */
+ * @ClassName AuthController
+ * @Description 登录注册接口
+ * @Author imyuanxiao
+ * @Date 2023/5/3 16:29
+ * @Version 1.0
+ **/
 @Slf4j
 @Validated
 @RestController

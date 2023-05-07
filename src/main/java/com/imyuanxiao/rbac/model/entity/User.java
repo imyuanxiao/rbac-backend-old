@@ -1,24 +1,22 @@
 package com.imyuanxiao.rbac.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * @Author imyuanxiao
+ * @ClassName User
+ * @Description 对应表user的实体类
  * @TableName user
- */
+ * @Author imyuanxiao
+ * @Version 1.0
+ **/
 @TableName(value ="user")
 @Data
 @Accessors(chain = true)

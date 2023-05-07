@@ -7,9 +7,12 @@ import lombok.experimental.Accessors;
 import java.util.Set;
 
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/4 15:05
- */
+ * @ClassName UserVO
+ * @Description 用户对象
+ * @Author imyuanxiao
+ * @Date 2023/5/4 15:05
+ * @Version 1.0
+ **/
 @Data
 @Accessors(chain = true)
 public class UserVO {

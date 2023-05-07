@@ -13,10 +13,12 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
- * 授权过滤器
- * @Author: imyuanxiao
- * @Date: 2023/5/4 22:22
- */
+ * @ClassName AuthFilter
+ * @Description 授权过滤器
+ * @Author imyuanxiao
+ * @Date 2023/5/4 22:22
+ * @Version 1.0
+ **/
 @Slf4j
 @Component
 public class AuthFilter  extends AbstractSecurityInterceptor implements Filter {

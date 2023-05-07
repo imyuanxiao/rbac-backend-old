@@ -12,10 +12,12 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
-* @author Administrator
-* @description 针对表【role】的数据库操作Service
-* @createDate 2023-05-03 00:41:26
-*/
+ * @ClassName RoleService
+ * @Description 针对表【role】的数据库操作Service
+ * @Author imyuanxiao
+ * @Date 2023/5/3 21:41
+ * @Version 1.0
+ **/
 public interface RoleService extends IService<Role> {
     /**
      * 根据用户id获取角色id

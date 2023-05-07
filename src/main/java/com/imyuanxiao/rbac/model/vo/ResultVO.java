@@ -5,10 +5,12 @@ import com.imyuanxiao.rbac.enums.ResultCode;
 import lombok.Getter;
 
 /**
- * 自定义统一响应体
- * @Author: imyuanxiao
- * @Date: 2023/5/3 1:07
- */
+ * @ClassName ResultVO
+ * @Description 自定义统一响应体
+ * @Author imyuanxiao
+ * @Date 2023/5/3 1:07
+ * @Version 1.0
+ **/
 @Getter
 public class ResultVO<T> {
     /**

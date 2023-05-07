@@ -7,11 +7,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+
 /**
-* @author Administrator
-* @description 针对表【permission】的数据库操作Service
-* @createDate 2023-05-03 00:42:19
-*/
+ * @ClassName PermissionService
+ * @Description 针对表【permission】的数据库操作Service
+ * @Author imyuanxiao
+ * @Date 2023/5/3 21:42
+ * @Version 1.0
+ **/
 public interface PermissionService extends IService<Permission> {
     /**
      * 根据用户id获取该用户的所有权限id

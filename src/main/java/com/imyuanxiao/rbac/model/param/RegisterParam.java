@@ -7,12 +7,13 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/3 0:58
- */
-
+ * @ClassName RegisterParam
+ * @Description 接收注册相关参数
+ * @Author imyuanxiao
+ * @Date 2023/5/3 0:58
+ * @Version 1.0
+ **/
 @Data
 public class RegisterParam {
 

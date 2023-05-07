@@ -6,9 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
+
 /**
- * @author imyuanxiao
- */
+ * @ClassName RbacApplication
+ * @Description 应用启动类
+ * @Author imyuanxiao
+ * @Date 2023/5/3 21:40
+ * @Version 1.0
+ **/
 @EnableOpenApi
 @SpringBootApplication
 @MapperScan(basePackages = {"com.imyuanxiao.rbac.mapper"})

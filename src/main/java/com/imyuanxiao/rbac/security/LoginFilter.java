@@ -19,10 +19,12 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 /**
- * 认证过滤器
- * @Author: imyuanxiao
- * @Date: 2023/5/6 11:07
- */
+ * @ClassName LoginFilter
+ * @Description 认证过滤器
+ * @Author imyuanxiao
+ * @Date 2023/5/6 11:07
+ * @Version 1.0
+ **/
 @Slf4j
 @Component
 public class LoginFilter  extends OncePerRequestFilter {

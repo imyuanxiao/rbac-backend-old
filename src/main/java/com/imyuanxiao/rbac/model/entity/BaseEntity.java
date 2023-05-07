@@ -4,11 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-
 /**
- * 基础实体类，所有实体对象集成此类
- * @Author : imyuanxiao
- */
+ * @ClassName RegisterParam
+ * @Description 所有实体对象集成此类
+ * @Author imyuanxiao
+ * @Version 1.0
+ **/
 @Data
 public abstract class BaseEntity {
     /**

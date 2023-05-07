@@ -1,8 +1,6 @@
 package com.imyuanxiao.rbac.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
@@ -12,9 +10,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * @Author imyuanxiao
+ * @ClassName Role
+ * @Description 对应表role的实体类
  * @TableName role
- */
+ * @Author imyuanxiao
+ * @Version 1.0
+ **/
 @TableName(value ="role")
 @Data
 @Accessors(chain = true)

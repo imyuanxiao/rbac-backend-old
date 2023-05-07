@@ -13,10 +13,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 /**
- * 授权管理，决定当前用户是否有该请求权限
- * @Author: imyuanxiao
- * @Date: 2023/5/6 11:15
- */
+ * @ClassName MyDecisionManager
+ * @Description 决定当前用户是否有该请求权限
+ * @Author imyuanxiao
+ * @Date 2023/5/6 11:15
+ * @Version 1.0
+ **/
 @Slf4j
 @Component
 public class MyDecisionManager implements AccessDecisionManager {

@@ -22,11 +22,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+
 /**
-* @author Administrator
-* @description 针对表【role】的数据库操作Service实现
-* @createDate 2023-05-03 00:41:26
-*/
+ * @ClassName RoleServiceImpl
+ * @Description 针对表【role】的数据库操作Service实现
+ * @Author imyuanxiao
+ * @Date 2023/5/3 21:41
+ * @Version 1.0
+ **/
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>

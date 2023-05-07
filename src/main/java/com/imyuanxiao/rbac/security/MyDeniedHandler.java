@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/6 11:18
- */
+ * @ClassName MyDeniedHandler
+ * @Description 返回无权限信息
+ * @Author imyuanxiao
+ * @Date 2023/5/6 11:18
+ * @Version 1.0
+ **/
 public class MyDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {

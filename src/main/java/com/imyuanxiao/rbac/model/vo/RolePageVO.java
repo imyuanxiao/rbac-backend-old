@@ -5,9 +5,12 @@ import lombok.Data;
 import java.util.Set;
 
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/4 15:18
- */
+ * @ClassName RolePageVO
+ * @Description 角色分页对象
+ * @Author imyuanxiao
+ * @Date 2023/5/4 15:18
+ * @Version 1.0
+ **/
 @Data
 public class RolePageVO {
     private Long id;

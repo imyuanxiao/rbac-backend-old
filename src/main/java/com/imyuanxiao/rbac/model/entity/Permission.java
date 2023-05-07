@@ -9,9 +9,12 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * @Author imyuanxiao
+ * @ClassName Permission
+ * @Description 对应表permission的实体类
  * @TableName permission
- */
+ * @Author imyuanxiao
+ * @Version 1.0
+ **/
 @TableName(value ="permission")
 @Data
 public class Permission extends BaseEntity implements Serializable {

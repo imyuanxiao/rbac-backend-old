@@ -1,21 +1,19 @@
 package com.imyuanxiao.rbac.controller.api;
 
 import com.imyuanxiao.rbac.context.UserContext;
-import com.imyuanxiao.rbac.model.param.LoginParam;
 import com.imyuanxiao.rbac.security.JwtManager;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+
 /**
- * @Author: imyuanxiao
- * @Date: 2023/5/4 17:51
- */
+ * @ClassName TestController
+ * @Description 测试接口
+ * @Author imyuanxiao
+ * @Date 2023/5/4 17:51
+ * @Version 1.0
+ **/
 @Slf4j
 @RestController
 @RequestMapping("/test")
