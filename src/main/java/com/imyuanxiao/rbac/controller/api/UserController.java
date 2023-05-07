@@ -23,9 +23,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.Set;
 
+import static com.imyuanxiao.rbac.util.CommonUtil.ACTION_SUCCESSFUL;
+
+
 /**
  * @ClassName UserController
- * @Description 用户接口
+ * @Description User Management Interface
  * @Author imyuanxiao
  * @Date 2023/5/3 0:54
  * @Version 1.0
@@ -33,7 +36,7 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-@Api(tags = "User management interface")
+@Api(tags = "User Management Interface")
 public class UserController {
 
     @Autowired
@@ -42,48 +45,51 @@ public class UserController {
     @Autowired
     private PermissionService permissionService;
 
-    @ApiOperation(value = "Add user")
-    @PostMapping
+    @PostMapping("/add")
     @Auth(id = 1, name = "新增用户")
+    @ApiOperation(value = "Add user")
     public String createUser(@RequestBody @Validated(UserParam.CreateUser.class) UserParam param) {
         userService.createUser(param);
-        return "Action successful.";
+        return ACTION_SUCCESSFUL;
     }
 
-    @ApiOperation(value = "Delete user")
-    @DeleteMapping
+    @DeleteMapping("/delete")
     @Auth(id = 2, name = "删除用户")
+    @ApiOperation(value = "Delete user")
     public String deleteUser(Long[] ids) {
         if (ArrayUtils.isEmpty(ids)) {
             throw new ApiException(ResultCode.VALIDATE_FAILED);
         }
         userService.removeByIds(Arrays.asList(ids));
-        return "Action successful.";
+        return ACTION_SUCCESSFUL;
     }
 
-    @ApiOperation(value = "Update user")
-    @PutMapping
+    @PutMapping("/update")
     @Auth(id = 3, name = "编辑用户")
+    @ApiOperation(value = "Update user")
     public String updateRoles(@RequestBody @Validated(UserParam.Update.class) UserParam param) {
         userService.update(param);
-        return "Action successful.";
+        return ACTION_SUCCESSFUL;
     }
 
+    @GetMapping("/get/{id}")
+    @Auth(id = 4, name = "通过id获取用户信息")
     @ApiOperation(value = "Get user info based on user ID")
-    @GetMapping("/user/{id}")
     public User getUserById(@ApiParam(value = "User ID", required = true)
                             @PathVariable("id") Long id) {
         return userService.getById(id);
     }
 
-    @ApiOperation(value = "Get permissions based on user ID")
     @GetMapping("/permissions/{id}")
+    @Auth(id = 5, name = "通过id获取用户权限")
+    @ApiOperation(value = "Get permissions based on user ID")
     public Set<Long> getPermissionsByUserId(@PathVariable("id") Long userId) {
         return permissionService.getIdsByUserId(userId);
     }
 
-    @ApiOperation(value = "Page through user information.")
     @GetMapping("/page/{current}")
+    @Auth(id = 6, name = "分页查询用户信息")
+    @ApiOperation(value = "Page through user information")
     public IPage<UserPageVO> getPage(@PathVariable("current") int current) {
         // 设置分页参数
         Page<UserPageVO> page = new Page<>();

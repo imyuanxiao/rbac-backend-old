@@ -13,58 +13,71 @@ import java.util.Set;
 
 /**
  * @ClassName RoleService
- * @Description Database operation service for table 'role'.
+ * @Description Database operation service for table "role".
  * @Author imyuanxiao
  * @Date 2023/5/3 21:41
  * @Version 1.0
  **/
 public interface RoleService extends IService<Role> {
-    /**
-     * Get role ID based on user ID.
-     * @param userId User ID
-     * @return Collection of role IDs for this user.
-     */
-    Set<Long> getIdsByUserId(Long userId);
-
 
     /**
-     * Get all information about roles based on user ID.
-     * @param userId User ID
-     * @return Collection of Roles for this user.
-     */
-    Set<Role> getRolesByUserId(Long userId);
-
-    /**
-     * Delete all roles based on user ID
-     * @param userId User ID
-     */
-    void removeByUserId(Serializable userId);
+     * Create role
+     * @author imyuanxiao
+     * @date 15:14 2023/5/7
+     * @param param Role-related parameters
+     **/
+    void createRole(RoleParam param);
 
     /**
      * Batch add roles based on user ID.
+     * @author imyuanxiao
+     * @date 15:12 2023/5/7
      * @param userId User ID
      * @param roleIds Collections of role ids
-     */
+     **/
     void insertRolesByUserId(Long userId, Collection<Long> roleIds);
 
     /**
-     * Get pagination information
-     * @param page Pagination parameters
-     * @return Pagination object
-     */
-    IPage<RolePageVO> selectPage(Page<RolePageVO> page);
+     * Delete all roles based on user ID
+     * @author imyuanxiao
+     * @date 15:12 2023/5/7
+     * @param userId User ID
+     **/
+    void removeByUserId(Serializable userId);
 
     /**
-     * Update r
-     * @param param 入参
-     */
+     * Update permissions for this role
+     * @author imyuanxiao
+     * @date 15:13 2023/5/7
+     * @param param Role-related parameters
+     **/
     void updatePermissions(RoleParam param);
 
     /**
-     * 创建角色
-     * @param param 入参
-     */
-    void createRole(RoleParam param);
+     * Get pagination information
+     * @author imyuanxiao
+     * @date 15:13 2023/5/7
+     * @param page Pagination parameters
+     * @return Pagination object
+     **/
+    IPage<RolePageVO> selectPage(Page<RolePageVO> page);
 
+    /**
+     * Get role IDs based on user ID.
+     * @author imyuanxiao
+     * @date 11:56 2023/5/7
+     * @param userId User ID
+     * @return Collection of role IDs for this user.
+     **/
+    Set<Long> getIdsByUserId(Long userId);
+    
+    /**
+     * Get all information about roles based on user ID.
+     * @author imyuanxiao
+     * @date 15:12 2023/5/7 
+     * @param userId User ID
+     * @return Collection of Roles for this user.
+     **/
+    Set<Role> getRolesByUserId(Long userId);
 
 }

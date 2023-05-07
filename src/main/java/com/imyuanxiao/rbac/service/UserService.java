@@ -14,7 +14,7 @@ import com.imyuanxiao.rbac.model.vo.UserVO;
 
 /**
  * @ClassName UserService
- * @Description 针对表【user】的数据库操作Service
+ * @Description Database operation service for table "user".
  * @Author imyuanxiao
  * @Date 2023/5/3 21:42
  * @Version 1.0

@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
  * @ClassName PermissionServiceImpl
- * @Description 针对表【permission】的数据库操作Service实现
+ * @Description Database operation Service implementation for the table "permission".
  * @Author imyuanxiao
  * @Date 2023/5/3 21:42
  * @Version 1.0

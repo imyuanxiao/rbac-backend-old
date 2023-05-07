@@ -25,7 +25,7 @@ import java.util.Set;
 
 /**
  * @ClassName RoleServiceImpl
- * @Description 针对表【role】的数据库操作Service实现
+ * @Description Database operation Service implementation for the table "role".
  * @Author imyuanxiao
  * @Date 2023/5/3 21:41
  * @Version 1.0

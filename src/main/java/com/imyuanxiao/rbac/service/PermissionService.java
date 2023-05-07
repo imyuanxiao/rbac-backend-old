@@ -10,37 +10,45 @@ import java.util.Set;
 
 /**
  * @ClassName PermissionService
- * @Description 针对表【permission】的数据库操作Service
+ * @Description Database operation service for table "permission".
  * @Author imyuanxiao
  * @Date 2023/5/3 21:42
  * @Version 1.0
  **/
 public interface PermissionService extends IService<Permission> {
+
     /**
-     * 根据用户id获取该用户的所有权限id
-     * @param userId 用户id
-     * @return 权限id集合
-     */
+     * Get permission IDs based on user ID
+     * @author imyuanxiao
+     * @date 15:25 2023/5/7 
+     * @param userId user ID
+     * @return Collections of permission IDs
+     **/
     Set<Long> getIdsByUserId(Long userId);
+    
+    /**
+     * Batch add permissions
+     * @author imyuanxiao
+     * @date 15:24 2023/5/7 
+     * @param permissions permissions to add 
+     **/
+    void insertPermissions(Collection<Permission> permissions);
 
     /**
-     * 批量新增接口类型的资源
-     * @param resources 资源对象集合
-     */
-    void insertPermissions(Collection<Permission> resources);
-
-    /**
-     * 根据类型删除资源
-     * @param type 资源类型，0为页面权限，1为操作权限
-     */
+     * Delete permissions by type
+     * @author imyuanxiao
+     * @date 15:26 2023/5/7 
+     * @param type permission type, "0" - page-level, "1" - operation-level.
+     **/
     void deletePermissionByType(int type);
 
     /**
-     * 根据用户id获取该用户的所有权限资源对象
-     * @param userId 用户id
-     * @return 权限资源集合
-     */
+     * Get permissions based on user ID
+     * @author imyuanxiao
+     * @date 15:27 2023/5/7
+     * @param userId user ID
+     * @return Collection of permissions
+     **/
     List<Permission> getPermissionsByUserId(Long userId);
-
 
 }

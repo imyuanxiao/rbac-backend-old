@@ -1,7 +1,9 @@
 package com.imyuanxiao.rbac.controller.api;
 
+import com.imyuanxiao.rbac.annotation.Auth;
 import com.imyuanxiao.rbac.model.entity.Permission;
 import com.imyuanxiao.rbac.service.PermissionService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import java.util.List;
 
 /**
  * @ClassName PermissionController
- * @Description 权限接口
+ * @Description Permission Management Interface
  * @Author imyuanxiao
  * @Date 2023/5/4 15:49
  * @Version 1.0
@@ -22,16 +24,15 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/permission")
+@Api(tags = "Permission Management Interface")
 public class PermissionController {
 
     @Autowired
     private PermissionService permissionService;
 
-    /**
-     * 获得所有权限信息
-     * */
-    @ApiOperation(value = "Get all permissions")
     @GetMapping("/list")
+    @Auth(id = 20, name = "查询所有权限信息")
+    @ApiOperation(value = "Get all permissions")
     public List<Permission> getPermissionList() {
         return permissionService.list();
     }

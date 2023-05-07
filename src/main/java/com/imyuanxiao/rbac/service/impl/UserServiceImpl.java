@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 
 /**
  * @ClassName UserServiceImpl
- * @Description Database operation Service implementation for the table [user].
+ * @Description Database operation Service implementation for the table "user".
  * @Author imyuanxiao
  * @Date 2023/5/3 21:42
  * @Version 1.0
