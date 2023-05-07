@@ -172,7 +172,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public IPage<UserPageVO> selectPage(Page<UserPageVO> page) {
         QueryWrapper<UserPageVO> queryWrapper = new QueryWrapper<>();
         // Don't show super admin (id:1) and current user
-        Long myId = SecurityContextUtil.getId();
+        Long myId = SecurityContextUtil.getCurrentUserId();
         queryWrapper.ne("id", myId).ne("id", 1);
         // Get page info
         IPage<UserPageVO> pages = baseMapper.selectPage(page, queryWrapper);

@@ -23,7 +23,9 @@ public class DataServiceImpl extends ServiceImpl<DataMapper, Data>
     @Override
     public IPage<DataPageVO> selectPage(Page<DataPageVO> page) {
         QueryWrapper<DataPageVO> queryWrapper = new QueryWrapper<>();
-        return baseMapper.selectPage(page, queryWrapper);
+        IPage<DataPageVO> result = baseMapper.selectPage(page, queryWrapper);
+        System.out.println(result.getRecords());
+        return result;
     }
 }
 

@@ -19,7 +19,7 @@ public class SecurityContextUtil {
      * @date 14:52 2023/5/7
      * @return java.lang.Long
      **/
-    public static Long getId(){
+    public static Long getCurrentUserId(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsVO userDetails = (UserDetailsVO)authentication.getPrincipal();
         return userDetails.getId();
