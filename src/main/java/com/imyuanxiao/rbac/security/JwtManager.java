@@ -90,13 +90,6 @@ public final class JwtManager {
     }
 
     /**
-     * 提取JWT中的username
-     *
-     * @param token JWT字符串
-     * @return 解析成功返回username，解析失败抛出异常
-     */
-
-    /**
      * Extract username from token
      * @author imyuanxiao
      * @date 14:56 2023/5/7

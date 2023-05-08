@@ -3,6 +3,7 @@ package com.imyuanxiao.rbac.controller.api;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.imyuanxiao.rbac.annotation.Auth;
 import com.imyuanxiao.rbac.model.vo.DataPageVO;
 import com.imyuanxiao.rbac.service.DataService;
 import io.swagger.annotations.Api;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/data")
+@Auth(id = 4000, name = "数据管理")
 @Api(tags = "Data Management Interface")
 public class DataController {
 
@@ -32,6 +34,7 @@ public class DataController {
     DataService dataService;
 
     @GetMapping("/page/{current}")
+    @Auth(id = 1, name = "查询所有测试数据")
     @ApiOperation(value = "Get data based on current page")
     public IPage<DataPageVO> getPage(@PathVariable("current") int current) {
         // 设置分页参数
