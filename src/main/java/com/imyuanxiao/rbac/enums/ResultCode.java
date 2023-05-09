@@ -31,7 +31,10 @@ public enum ResultCode {
     FAILED(2001, "操作失败"),
     DATABASE_ERROR(2002, "数据库操作异常"),
 
-    ERROR(5000, "未知错误");
+    ERROR(5000, "未知错误"),
+
+    METHOD_NOT_ALLOWED(405, "Method not allowed!"),
+    BAD_REQUEST(400, "Bad Request");
 
     private int code;
     private String msg;

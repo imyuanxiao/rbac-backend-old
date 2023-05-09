@@ -48,6 +48,7 @@ public class LoginFilter  extends OncePerRequestFilter {
         // 提取用户名，查询数据库
         // 在提取时会验证token是否有效
         username = JwtManager.extractUsername(jwt);
+
         // username有效，并且上下文对象中没有配置用户
         if (StrUtil.isNotBlank(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
             // 从数据库中获取用户信息、密码、角色信息等，返回一个包含用户详细信息的 UserDetailsVO 对象

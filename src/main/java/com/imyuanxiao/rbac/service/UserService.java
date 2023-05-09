@@ -73,8 +73,8 @@ public interface UserService extends IService<User> {
      * @date 12:07 2023/5/9
      * @return UserVO object
      **/
-    Set<Long> myPermission();
+    Set<Long> myPermission(String username);
 
-    String updateToken();
+    String updateToken(String username);
 }
 

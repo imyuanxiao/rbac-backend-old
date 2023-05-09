@@ -26,6 +26,8 @@ public class UserVO {
 
     private String email;
 
+    private byte[] avatar;
+
     private String token;
 
     private Set<Long> roles;

@@ -1,6 +1,9 @@
 package com.imyuanxiao.rbac.controller.api;
 
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.imyuanxiao.rbac.model.param.LoginParam;
 import com.imyuanxiao.rbac.model.param.RegisterParam;
 import com.imyuanxiao.rbac.model.vo.UserVO;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 /**
@@ -46,17 +50,18 @@ public class AuthController {
         return userService.login(param);
     }
 
-    @GetMapping("/my-permission")
+    @PostMapping("/my-permission")
     @ApiOperation(value = "Get UserVO every time route changes")
-    public Set<Long> myPermission(){
+    public Set<Long> myPermission(@RequestBody @NotBlank String username){
+        System.out.println("permission" + username);
         // get user in context
-        return userService.myPermission();
+        return userService.myPermission(username);
     }
 
-    @GetMapping("/update-token")
+    @PostMapping("/update-token")
     @ApiOperation(value = "Update token")
-    public String updateToken(){
-        return userService.updateToken();
+    public String updateToken(@RequestBody String username){
+        return userService.updateToken(username);
     }
 
     /**

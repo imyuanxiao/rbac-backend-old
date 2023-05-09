@@ -2,8 +2,11 @@ package com.imyuanxiao.rbac.security;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.exceptions.ValidateException;
 import cn.hutool.jwt.*;
 import cn.hutool.jwt.signers.JWTSignerUtil;
+import com.imyuanxiao.rbac.enums.ResultCode;
+import com.imyuanxiao.rbac.exception.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,21 +62,25 @@ public final class JwtManager {
      **/
     public static void verifyToken(String token) {
         // 解析失败了会抛出异常，所以要捕捉一下。token过期、token非法都会导致解析失败
+
+        //验证签名
+        boolean verify = JWTUtil.verify(token, JWTSignerUtil.hs256(secretKeyBytes));
+        if(!verify) {
+            throw new ApiException(ResultCode.INVALID_TOKEN);
+        }
+        // 验证算法和时间
+        JWTValidator validator = JWTValidator.of(token);
+        // 验证算法
         try {
-            //验证签名
-            boolean verify = JWTUtil.verify(token, JWTSignerUtil.hs256(secretKeyBytes));
-            if(!verify) {
-                throw new RuntimeException("Signature verification failed.");
-            }
-            // 验证算法和时间
-            JWTValidator validator = JWTValidator.of(token);
-            // 验证算法
             validator.validateAlgorithm(JWTSignerUtil.hs256(secretKeyBytes));
-            // 验证时间
+        } catch (ValidateException e) {
+            throw new ApiException(ResultCode.INVALID_TOKEN);
+        }
+        // 验证时间
+        try {
             JWTValidator.of(token).validateDate();
-        } catch (Exception e) {
-            log.error("Signature verification failed:" + e.getMessage());
-            throw new RuntimeException(e.getMessage());
+        } catch (ValidateException e) {
+            throw new ApiException(ResultCode.TOKEN_EXPIRED);
         }
     }
 

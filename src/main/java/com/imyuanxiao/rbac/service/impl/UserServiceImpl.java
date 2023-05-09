@@ -3,6 +3,7 @@ package com.imyuanxiao.rbac.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -93,15 +94,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Set<Long> myPermission() {
-        Long userId = SecurityContextUtil.getCurrentUserId();
-        return permissionService.getIdsByUserId(userId);
+    public Set<Long> myPermission(String username) {
+        User user = checkTokenWithUsername(username);
+        return permissionService.getIdsByUserId(user.getId());
     }
 
     @Override
-    public String updateToken() {
-        User user = SecurityContextUtil.getCurrentUser();
+    public String updateToken(String username) {
+        User user = checkTokenWithUsername(username);
         return JwtManager.generate(user.getUsername());
+    }
+
+    private static User checkTokenWithUsername(String username) {
+        //将json字符串转为对象，提取用户名
+        username = (String) JSONUtil.parseObj(username).get("username");
+        if(StrUtil.isBlank(username)){
+            throw new ApiException(ResultCode.VALIDATE_FAILED, "Invalid username.");
+        }
+        User user = SecurityContextUtil.getCurrentUser();
+        if(!username.equals(user.getUsername())){
+            throw new ApiException(ResultCode.VALIDATE_FAILED, "The currently logged-in user is not consistent with the user in the token.");
+        }
+        return user;
     }
 
     private UserVO getUserVO(User user) {
