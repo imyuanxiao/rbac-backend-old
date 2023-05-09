@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 /**
  * @ClassName AuthController
@@ -45,14 +46,12 @@ public class AuthController {
         return userService.login(param);
     }
 
-    //TODO only return permissions
-    @GetMapping("/me")
+    @GetMapping("/my-permission")
     @ApiOperation(value = "Get UserVO every time route changes")
-    public UserVO me(){
+    public Set<Long> myPermission(){
         // get user in context
-        return userService.me();
+        return userService.myPermission();
     }
-
 
     @GetMapping("/update-token")
     @ApiOperation(value = "Update token")

@@ -70,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             throw new ApiException(ResultCode.VALIDATE_FAILED, "Username or password is incorrect！");
         }
         // Generate token, get and put user permissions in UserVO object
-        return getUserVO(user, false);
+        return getUserVO(user);
     }
     
     @Override
@@ -86,16 +86,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // Get permissions id
             Set<Long> permissionIds = permissionService.getIdsByUserId(user.getId());
             // Put user info, token, permissions in UserVO object
-            return getUserVO(user, false);
+            return getUserVO(user);
         } catch (Exception e) {
             throw new ApiException(ResultCode.FAILED, "Phone number already exists.");
         }
     }
 
     @Override
-    public UserVO me() {
-        User user = SecurityContextUtil.getCurrentUser();
-        return getUserVO(user, true);
+    public Set<Long> myPermission() {
+        Long userId = SecurityContextUtil.getCurrentUserId();
+        return permissionService.getIdsByUserId(userId);
     }
 
     @Override
@@ -104,13 +104,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return JwtManager.generate(user.getUsername());
     }
 
-    private UserVO getUserVO(User user, boolean me) {
+    private UserVO getUserVO(User user) {
         UserVO userVO = new UserVO();
         BeanUtil.copyProperties(user, userVO);
         userVO.setRoles(roleService.getIdsByUserId(user.getId()))
                 .setPermissionIds(permissionService.getIdsByUserId(user.getId()));
-        if(!me){
-            userVO.setToken(JwtManager.generate(user.getUsername()));
+        userVO.setToken(JwtManager.generate(user.getUsername()));
+
+        // 隐藏手机号中除了最后四位的所有数字
+        String phone = userVO.getPhone();
+        if (StrUtil.isNotBlank(phone) && phone.length() > 4) {
+            phone = phone.replaceAll("(?<=\\d{0}).(?=\\d{4})", "*");
+            userVO.setPhone(phone);
         }
         return userVO;
     }

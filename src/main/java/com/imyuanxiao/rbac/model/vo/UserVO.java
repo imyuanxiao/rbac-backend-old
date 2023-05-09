@@ -1,5 +1,6 @@
 package com.imyuanxiao.rbac.model.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.imyuanxiao.rbac.model.entity.Role;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -20,6 +21,10 @@ public class UserVO {
     private Long id;
 
     private String username;
+
+    private String phone;
+
+    private String email;
 
     private String token;
 

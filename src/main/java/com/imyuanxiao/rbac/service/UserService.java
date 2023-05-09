@@ -7,10 +7,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.imyuanxiao.rbac.model.param.LoginParam;
 import com.imyuanxiao.rbac.model.param.RegisterParam;
 import com.imyuanxiao.rbac.model.param.UserParam;
-import com.imyuanxiao.rbac.model.vo.ResultVO;
-import com.imyuanxiao.rbac.model.vo.UserDetailsVO;
 import com.imyuanxiao.rbac.model.vo.UserPageVO;
 import com.imyuanxiao.rbac.model.vo.UserVO;
+
+import java.util.Set;
 
 /**
  * @ClassName UserService
@@ -73,7 +73,7 @@ public interface UserService extends IService<User> {
      * @date 12:07 2023/5/9
      * @return UserVO object
      **/
-    UserVO me();
+    Set<Long> myPermission();
 
     String updateToken();
 }

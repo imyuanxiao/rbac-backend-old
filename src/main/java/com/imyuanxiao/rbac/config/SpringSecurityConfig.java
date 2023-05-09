@@ -57,8 +57,10 @@ public class SpringSecurityConfig {
                 // This is an essential configuration that allows cross-domain debugging for frontend developers.
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 // Specifies that certain endpoints can be accessed without authentication.
-                .antMatchers("/login/**",
-                        "/auth/**",
+                .antMatchers(
+                        "/auth/login",
+                        "/auth/code/**",
+                        "/auth/register",
                         "/swagger-ui/**",
                         "/swagger-ui.html",
                         "/swagger-resources/**",
