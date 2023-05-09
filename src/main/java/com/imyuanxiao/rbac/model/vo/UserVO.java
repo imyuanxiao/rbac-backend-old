@@ -30,7 +30,7 @@ public class UserVO {
 
     private String token;
 
-    private Set<Long> roles;
+    private Set<Long> roleIds;
 
     private Set<Long> permissionIds;
 

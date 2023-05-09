@@ -121,7 +121,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserVO getUserVO(User user) {
         UserVO userVO = new UserVO();
         BeanUtil.copyProperties(user, userVO);
-        userVO.setRoles(roleService.getIdsByUserId(user.getId()))
+        userVO.setRoleIds(roleService.getIdsByUserId(user.getId()))
                 .setPermissionIds(permissionService.getIdsByUserId(user.getId()));
         userVO.setToken(JwtManager.generate(user.getUsername()));
 
