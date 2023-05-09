@@ -21,7 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * @ClassName SpringSecurityConfig
@@ -48,7 +51,7 @@ public class SpringSecurityConfig {
         http.csrf().disable();
         http.headers().frameOptions().disable();
         // Enable cross-origin resource sharing (CORS) to facilitate frontend calls to the API.
-        http.cors();
+        http.cors().configurationSource(corsConfigurationSource());
         // This is a key configuration that determines which interfaces are protected and which interfaces bypass protection.
         http.authorizeRequests()
                 // This is an essential configuration that allows cross-domain debugging for frontend developers.
@@ -77,6 +80,18 @@ public class SpringSecurityConfig {
         http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
 
         return http.build();
+    }
+
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean

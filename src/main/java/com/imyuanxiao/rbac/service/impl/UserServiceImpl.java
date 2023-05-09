@@ -63,7 +63,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // Verify user from database
         User user = this.lambdaQuery()
                 .eq(StrUtil.isNotBlank(loginParam.getUsername()), User::getUsername, loginParam.getUsername())
-//                .eq(StrUtil.isNotBlank(loginParam.getPhone()), User::getPhone, loginParam.getPhone())
                 .one();
 
         // Throw error if user or password is wrong
@@ -71,13 +70,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             throw new ApiException(ResultCode.VALIDATE_FAILED, "Username or password is incorrect！");
         }
         // Generate token, get and put user permissions in UserVO object
-        UserVO userVO = new UserVO();
-        userVO.setId(user.getId()).setUsername(user.getUsername())
-                .setToken(JwtManager.generate(user.getUsername()))
-                .setPermissionIds(permissionService.getIdsByUserId(user.getId()));
-        return userVO;
+        return getUserVO(user);
     }
-
+    
     @Override
     public UserVO register(RegisterParam param) {
         // Use phone and code to register, initial username is phone number
@@ -91,14 +86,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // Get permissions id
             Set<Long> permissionIds = permissionService.getIdsByUserId(user.getId());
             // Put user info, token, permissions in UserVO object
-            UserVO userVO = new UserVO();
-            BeanUtil.copyProperties(user, userVO);
-            userVO.setPermissionIds(permissionIds)
-                    .setToken(JwtManager.generate(user.getUsername()));
-            return userVO;
+            return getUserVO(user);
         } catch (Exception e) {
             throw new ApiException(ResultCode.FAILED, "Phone number already exists.");
         }
+    }
+
+    private UserVO getUserVO(User user) {
+        UserVO userVO = new UserVO();
+        BeanUtil.copyProperties(user, userVO);
+        userVO.setToken(JwtManager.generate(user.getUsername()))
+                .setRoles(roleService.getRolesByUserId(user.getId()))
+                .setPermissionIds(permissionService.getIdsByUserId(user.getId()));
+        return userVO;
     }
 
     @Override
