@@ -45,6 +45,13 @@ public class AuthController {
         return userService.login(param);
     }
 
+    @PostMapping("/me")
+    @ApiOperation(value = "Get UserVO every time route changes")
+    public UserVO me(){
+        // get user in context
+        return userService.me();
+    }
+
     /**
      * Send verification code
      * @author imyuanxiao

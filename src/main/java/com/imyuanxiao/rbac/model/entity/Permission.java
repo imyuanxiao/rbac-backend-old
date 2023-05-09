@@ -47,16 +47,16 @@ public class Permission extends BaseEntity{
     @TableField(value = "description")
     private String description;
 
-    /**
-     * createdTime
-     */
-    @TableField(value = "created_time")
-    private Date createdTime;
-
-    /**
-     * updatedTime
-     */
-    @TableField(value = "updated_time")
-    private Date updatedTime;
+//    /**
+//     * createdTime
+//     */
+//    @TableField(value = "created_time")
+//    private Date createdTime;
+//
+//    /**
+//     * updatedTime
+//     */
+//    @TableField(value = "updated_time")
+//    private Date updatedTime;
 
 }

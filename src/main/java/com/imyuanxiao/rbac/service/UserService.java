@@ -67,5 +67,12 @@ public interface UserService extends IService<User> {
      **/
     IPage<UserPageVO> selectPage(Page<UserPageVO> page);
 
+    /**
+     * Get UserVO by using user in context
+     * @author imyuanxiao
+     * @date 12:07 2023/5/9
+     * @return UserVO object
+     **/
+    UserVO me();
 }
 

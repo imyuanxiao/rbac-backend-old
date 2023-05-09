@@ -92,11 +92,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
     }
 
+    @Override
+    public UserVO me() {
+        User user = SecurityContextUtil.getCurrentUser();
+        return getUserVO(user);
+    }
+
     private UserVO getUserVO(User user) {
         UserVO userVO = new UserVO();
         BeanUtil.copyProperties(user, userVO);
         userVO.setToken(JwtManager.generate(user.getUsername()))
-                .setRoles(roleService.getRolesByUserId(user.getId()))
+                .setRoles(roleService.getIdsByUserId(user.getId()))
                 .setPermissionIds(permissionService.getIdsByUserId(user.getId()));
         return userVO;
     }
@@ -183,6 +189,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         return pages;
     }
+
+
 
 }
 

@@ -35,20 +35,16 @@ public class Role  extends BaseEntity{
     @TableField(value = "description")
     private String description;
 
-    /**
-     * createdTime
-     */
-    @TableField(value = "created_time")
-    private Date createdTime;
-
-    /**
-     * updatedTime
-     */
-    @TableField(value = "updated_time")
-    private Date updatedTime;
-
-    @Serial
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+//    /**
+//     * createdTime
+//     */
+//    @TableField(value = "created_time")
+//    private Date createdTime;
+//
+//    /**
+//     * updatedTime
+//     */
+//    @TableField(value = "updated_time")
+//    private Date updatedTime;
 
 }
