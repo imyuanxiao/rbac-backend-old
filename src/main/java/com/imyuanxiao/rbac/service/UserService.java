@@ -74,5 +74,7 @@ public interface UserService extends IService<User> {
      * @return UserVO object
      **/
     UserVO me();
+
+    String updateToken();
 }
 

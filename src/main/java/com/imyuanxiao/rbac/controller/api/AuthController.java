@@ -45,11 +45,19 @@ public class AuthController {
         return userService.login(param);
     }
 
-    @PostMapping("/me")
+    //TODO only return permissions
+    @GetMapping("/me")
     @ApiOperation(value = "Get UserVO every time route changes")
     public UserVO me(){
         // get user in context
         return userService.me();
+    }
+
+
+    @GetMapping("/update-token")
+    @ApiOperation(value = "Update token")
+    public String updateToken(){
+        return userService.updateToken();
     }
 
     /**

@@ -70,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             throw new ApiException(ResultCode.VALIDATE_FAILED, "Username or password is incorrect！");
         }
         // Generate token, get and put user permissions in UserVO object
-        return getUserVO(user);
+        return getUserVO(user, false);
     }
     
     @Override
@@ -86,7 +86,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // Get permissions id
             Set<Long> permissionIds = permissionService.getIdsByUserId(user.getId());
             // Put user info, token, permissions in UserVO object
-            return getUserVO(user);
+            return getUserVO(user, false);
         } catch (Exception e) {
             throw new ApiException(ResultCode.FAILED, "Phone number already exists.");
         }
@@ -95,15 +95,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public UserVO me() {
         User user = SecurityContextUtil.getCurrentUser();
-        return getUserVO(user);
+        return getUserVO(user, true);
     }
 
-    private UserVO getUserVO(User user) {
+    @Override
+    public String updateToken() {
+        User user = SecurityContextUtil.getCurrentUser();
+        return JwtManager.generate(user.getUsername());
+    }
+
+    private UserVO getUserVO(User user, boolean me) {
         UserVO userVO = new UserVO();
         BeanUtil.copyProperties(user, userVO);
-        userVO.setToken(JwtManager.generate(user.getUsername()))
-                .setRoles(roleService.getIdsByUserId(user.getId()))
+        userVO.setRoles(roleService.getIdsByUserId(user.getId()))
                 .setPermissionIds(permissionService.getIdsByUserId(user.getId()));
+        if(!me){
+            userVO.setToken(JwtManager.generate(user.getUsername()));
+        }
         return userVO;
     }
 
