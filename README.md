@@ -1,5 +1,5 @@
 # 项目简介
-本项目是基于Spring Boot + MySQL + MyBatis Plus + Spring Security + JWT 打造的RBAC通用权限管理系统（Role-Based Access Controller基于角色访问控制模型）。本文档是项目完成的全流程记录。
+基于Spring Boot + MySQL + MyBatis Plus + Spring Security + JWT 打造RBAC通用权限管理系统（Role-Based Access Controller基于角色访问控制模型）
 # 参考资料
 [【项目实践】SpringBoot三招组合拳，手把手教你打出优雅的后端接口](https://zhuanlan.zhihu.com/p/340620501)<br />[【项目实践】后端接口统一规范的同时，如何优雅地扩展规范](https://zhuanlan.zhihu.com/p/342463219)<br />[【项目实践】一文带你搞定Session和JWT](https://zhuanlan.zhihu.com/p/342744060)<br />[【项目实践】一文带你搞定页面权限、按钮权限以及数据权限](https://zhuanlan.zhihu.com/p/342746910)<br />[【项目实践】一文带你搞定Spring Security + JWT实现前后端分离下的认证授权](https://zhuanlan.zhihu.com/p/342755411)
 # 项目结构
@@ -2048,8 +2048,193 @@ public class TestController {
 }
 ```
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/29364238/1683412321403-a8f25dcc-904d-4b7d-9512-27b624ee828d.png#averageHue=%23faf9f8&clientId=u567c33e7-6148-4&from=paste&height=414&id=ufd4d9072&originHeight=518&originWidth=602&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=43542&status=done&style=none&taskId=uf7fda0ac-b2db-468f-a7d2-689f7e953d0&title=&width=481.6)<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/29364238/1683412366199-c194395f-47a4-4e6a-94f7-426c9c85a5b9.png#averageHue=%23fbfbfa&clientId=u567c33e7-6148-4&from=paste&height=487&id=u21e0567d&originHeight=609&originWidth=774&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=52470&status=done&style=none&taskId=u675b87c3-9466-42a8-bf18-bf9e8842f44&title=&width=619.2)
+# SpringSecurity跨域问题
+前端发送请求到后端，如果没有进行跨域配置，就会被拦截，需要做如下设置。
+```java
+@Configuration
+@EnableWebSecurity
+public class SpringSecurityConfig {
+    ...
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        ...
+        // Enable cross-origin resource sharing (CORS) to facilitate frontend calls to the API.
+        http.cors().configurationSource(corsConfigurationSource());
+        ...
+        return http.build();
+    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    ...
+}
+```
 # 完善controller
 详见git仓库<br />[https://github.com/imyuanxiao/rbac](https://github.com/imyuanxiao/rbac)
+# 后续更新
+根据前端开发进度，完善后端对应接口
+## UserVO
+增加返回信息：角色ID。注意，只需要返回id，前端根据id匹配名称，而且前端会做国际化工作。
+```java
+@Data
+@Accessors(chain = true)
+public class UserVO {
+
+    private Long id;
+
+    private String username;
+
+    private String token;
+
+    private Set<Long> roles;
+
+    private Set<Long> permissionIds;
+
+}
+```
+## 权限验证接口
+用户登录后，前端每次切换路由都会向后端发送请求，获取当前用户的权限信息，以防止用户权限发生变化。
+### AuthController
+增加方法获取用户信息，前端需要传token和用户名，如果token正确，用户信息会被保存在上下文对象中。之后验证用户名和token解析的用户名是否一致。
+```java
+public class AuthController {
+	...
+    @PostMapping("/my-permission")
+    @ApiOperation(value = "Get UserVO every time route changes")
+    public Set<Long> myPermission(@RequestBody @NotBlank String username){
+        // get user in context
+        return userService.myPermission(username);
+    }
+    ...
+}
+```
+注意，这里需要更改SpringSecurityConfig的允许绕过权限验证的路径，否则可以不需要token就调用myPermission()方法，会出错。我这里把原来的"/auth/**"换成了更具体的路径。
+```java
+public class SpringSecurityConfig {
+	...
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        ...
+        // This is a key configuration that determines which interfaces are protected and which interfaces bypass protection.
+        http.authorizeRequests()
+                ...
+                // Specifies that certain endpoints can be accessed without authentication.
+                .antMatchers(
+                        "/auth/login",
+                        "/auth/code/**",
+                        "/auth/register",
+                    ...)
+        }
+        ...
+}
+```
+### UserServiceImpl
+该类里主要提取公用方法，增加通过上下文获取用户信息的方法。<br />注意：用myPermission方法检查登录信息的时候，只返回用户权限合集。
+```java
+public class UserServiceImpl extends ServiceImpl<UserMapper, User>
+    implements UserService, UserDetailsService {
+    ....
+    @Override
+    public UserVO login(LoginParam loginParam) {
+        // Verify user from database
+        User user = this.lambdaQuery()
+                .eq(StrUtil.isNotBlank(loginParam.getUsername()), User::getUsername, loginParam.getUsername())
+                .one();
+
+        // Throw error if user or password is wrong
+        if(user == null || !passwordEncoder.matches(loginParam.getPassword(), user.getPassword())){
+            throw new ApiException(ResultCode.VALIDATE_FAILED, "Username or password is incorrect！");
+        }
+        // Generate token, get and put user permissions in UserVO object
+        return getUserVO(user);
+    }
+    
+    @Override
+    public UserVO register(RegisterParam param) {
+        // Use phone and code to register, initial username is phone number
+        User user = new User().setUsername(param.getPhone())
+                .setPassword(passwordEncoder.encode(param.getPassword()))
+                .setPhone(param.getPhone());
+        try {
+            this.save(user);
+            // Add default user role - 3L visitor
+            roleService.insertRolesByUserId(user.getId(), List.of(3L));
+            // Get permissions id
+            Set<Long> permissionIds = permissionService.getIdsByUserId(user.getId());
+            // Put user info, token, permissions in UserVO object
+            return getUserVO(user);
+        } catch (Exception e) {
+            throw new ApiException(ResultCode.FAILED, "Phone number already exists.");
+        }
+    }
+
+    @Override
+    public Set<Long> myPermission() {
+        Long userId = SecurityContextUtil.getCurrentUserId();
+        return permissionService.getIdsByUserId(userId);
+    }
+
+    private UserVO getUserVO(User user) {
+        UserVO userVO = new UserVO();
+        BeanUtil.copyProperties(user, userVO);
+        userVO.setRoles(roleService.getIdsByUserId(user.getId()))
+                .setPermissionIds(permissionService.getIdsByUserId(user.getId()));
+        userVO.setToken(JwtManager.generate(user.getUsername()));
+        return userVO;
+    }
+    ...
+}
+```
+### SpringSecurityUtil
+```java
+public class SecurityContextUtil {
+    ...
+    /**
+     * Get user object from spring security context
+     * @author imyuanxiao
+     * @date 12:14 2023/5/9  
+     * @return User Object
+     **/
+    public static User getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsVO userDetails = (UserDetailsVO)authentication.getPrincipal();
+        return userDetails.getUser();
+    }
+	...
+}
+
+```
+## token更新接口
+```java
+public class AuthController {
+    ...
+    @GetMapping("/update-token")
+    @ApiOperation(value = "Update token")
+    public String updateToken(){
+        return userService.updateToken();
+    }
+	...
+}
+```
+```java
+public class UserServiceImpl extends ServiceImpl<UserMapper, User>
+    implements UserService, UserDetailsService {
+    ...
+    @Overr  ide
+    public String updateToken() {
+        User user = SecurityContextUtil.getCurrentUser();
+        return JwtManager.generate(user.getUsername());
+    }
+    ...
+}
+```
 # 基于redis的验证码和token验证
 将验证码和token保存在redis数据库，用于手机号验证码校验和token有效性校验
 

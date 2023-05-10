@@ -28,11 +28,10 @@ public class UserVO {
 
     private byte[] avatar;
 
-    private String token;
-
     private Set<Long> roleIds;
 
     private Set<Long> permissionIds;
 
+    private String token;
 
 }
