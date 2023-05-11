@@ -17,6 +17,7 @@ import com.imyuanxiao.rbac.model.param.UserParam;
 import com.imyuanxiao.rbac.model.vo.UserDetailsVO;
 import com.imyuanxiao.rbac.model.vo.UserPageVO;
 import com.imyuanxiao.rbac.model.vo.UserVO;
+import com.imyuanxiao.rbac.service.CompanyService;
 import com.imyuanxiao.rbac.service.PermissionService;
 import com.imyuanxiao.rbac.service.RoleService;
 import com.imyuanxiao.rbac.service.UserService;
@@ -56,6 +57,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private CompanyService companyService;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 

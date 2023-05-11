@@ -24,7 +24,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/permission")
-@Auth(id = 3000, name = "权限管理")
+@Auth(id = 4000, name = "权限管理")
 @Api(tags = "Permission Management Interface")
 public class PermissionController {
 

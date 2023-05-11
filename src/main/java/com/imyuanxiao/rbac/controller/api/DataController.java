@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/data")
-@Auth(id = 4000, name = "数据管理")
+@Auth(id = 6000, name = "数据管理")
 @Api(tags = "Data Management Interface")
 public class DataController {
 

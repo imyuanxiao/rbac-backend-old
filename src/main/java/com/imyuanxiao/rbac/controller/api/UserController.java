@@ -36,7 +36,7 @@ import static com.imyuanxiao.rbac.util.CommonUtil.ACTION_SUCCESSFUL;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-@Auth(id = 1000, name = "用户管理")
+@Auth(id = 1000, name = "账户管理")
 @Api(tags = "User Management Interface")
 public class UserController {
 
@@ -88,15 +88,15 @@ public class UserController {
         return permissionService.getIdsByUserId(userId);
     }
 
-    @GetMapping("/page/{current}")
+    @GetMapping("/page/{current}&{pageSize}")
     @Auth(id = 6, name = "分页查询用户信息")
     @ApiOperation(value = "Page through user information")
-    public IPage<UserPageVO> getPage(@PathVariable("current") int current) {
+    public IPage<UserPageVO> getPage(@PathVariable("current") int current, @PathVariable("pageSize") int pageSize) {
         // 设置分页参数
         Page<UserPageVO> page = new Page<>();
         OrderItem orderItem = new OrderItem();
         orderItem.setColumn("id");
-        page.setCurrent(current).addOrder(orderItem);
+        page.setCurrent(current).setSize(pageSize).addOrder(orderItem);
         return userService.selectPage(page);
     }
 

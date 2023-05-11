@@ -30,7 +30,7 @@ import static com.imyuanxiao.rbac.util.CommonUtil.ACTION_SUCCESSFUL;
 @Slf4j
 @RestController
 @RequestMapping("/role")
-@Auth(id = 2000, name = "角色管理")
+@Auth(id = 3000, name = "角色管理")
 @Api(tags = "Role Management Interface")
 public class RoleController {
     @Autowired

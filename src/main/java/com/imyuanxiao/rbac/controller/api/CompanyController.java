@@ -24,7 +24,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/company")
-@Auth(id = 5000, name = "公司管理")
+@Auth(id = 2000, name = "组织结构")
 @Api(tags = "Company Management Interface")
 public class CompanyController {
 
