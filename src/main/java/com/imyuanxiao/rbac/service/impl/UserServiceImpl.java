@@ -98,28 +98,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Set<Long> myPermission(String username) {
-        User user = checkTokenWithUsername(username);
-        return permissionService.getIdsByUserId(user.getId());
+    public Set<Long> myPermission() {
+        Long currentUserId = SecurityContextUtil.getCurrentUserId();
+        return permissionService.getIdsByUserId(currentUserId);
     }
 
     @Override
-    public String updateToken(String username) {
-        User user = checkTokenWithUsername(username);
-        return JwtManager.generate(user.getUsername());
-    }
-
-    private static User checkTokenWithUsername(String username) {
-        //将json字符串转为对象，提取用户名
-        username = (String) JSONUtil.parseObj(username).get("username");
-        if(StrUtil.isBlank(username)){
-            throw new ApiException(ResultCode.VALIDATE_FAILED, "Invalid username.");
-        }
-        User user = SecurityContextUtil.getCurrentUser();
-        if(!username.equals(user.getUsername())){
-            throw new ApiException(ResultCode.VALIDATE_FAILED, "The currently logged-in user is not consistent with the user in the token.");
-        }
-        return user;
+    public String updateToken() {
+        String username = SecurityContextUtil.getCurrentUser().getUsername();
+        return JwtManager.generate(username);
     }
 
     private UserVO getUserVO(User user) {

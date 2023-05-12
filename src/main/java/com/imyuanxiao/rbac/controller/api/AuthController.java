@@ -50,18 +50,16 @@ public class AuthController {
         return userService.login(param);
     }
 
-    @PostMapping("/my-permission")
+    @GetMapping("/my-permission")
     @ApiOperation(value = "Get UserVO every time route changes")
-    public Set<Long> myPermission(@RequestBody @NotBlank String username){
-        System.out.println("permission" + username);
-        // get user in context
-        return userService.myPermission(username);
+    public Set<Long> myPermission(){
+        return userService.myPermission();
     }
 
-    @PostMapping("/update-token")
+    @GetMapping("/update-token")
     @ApiOperation(value = "Update token")
-    public String updateToken(@RequestBody String username){
-        return userService.updateToken(username);
+    public String updateToken(){
+        return userService.updateToken();
     }
 
     /**

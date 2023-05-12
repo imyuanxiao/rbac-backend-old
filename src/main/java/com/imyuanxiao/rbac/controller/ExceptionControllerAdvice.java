@@ -79,24 +79,4 @@ public class ExceptionControllerAdvice {
         return new ResultVO<>(ResultCode.ERROR, "系统异常，请稍后重试");
     }
 
-//    /**
-//     * 方法异常
-//     * @author imyuanxiao
-//     * @date 18:22 2023/5/9
-//     * @param ex method exception
-//     * @return ResultVO
-//     **/
-//    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-//    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-//    public ResultVO<String> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
-//        // 处理逻辑
-//        return new ResultVO<>(ResultCode.METHOD_NOT_ALLOWED, "Request method not allowed!");
-//    }
-//
-//    @ExceptionHandler(HttpMessageNotReadableException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ResultVO<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-//        return new ResultVO<>(ResultCode.BAD_REQUEST,"Missing or invalid request body parameter format.");
-//    }
-
 }
