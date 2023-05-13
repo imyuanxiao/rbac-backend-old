@@ -55,7 +55,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
 
     @Override
     public void removeByUserId(Serializable userId) {
-        baseMapper.deleteById(userId);
+        baseMapper.deleteByUserId(userId);
     }
 
     @Override
