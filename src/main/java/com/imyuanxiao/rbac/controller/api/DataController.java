@@ -34,7 +34,7 @@ public class DataController {
     DataService dataService;
 
     @GetMapping("/page/{current}")
-    @Auth(id = 1, name = "查询所有测试数据")
+//    @Auth(id = 1, name = "查询所有测试数据")
     @ApiOperation(value = "Get data based on current page")
     public IPage<DataPageVO> getPage(@PathVariable("current") int current) {
         // 设置分页参数

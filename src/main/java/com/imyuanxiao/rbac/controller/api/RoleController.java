@@ -47,35 +47,35 @@ public class RoleController {
     @DeleteMapping("/delete")
     @Auth(id = 2, name = "删除角色")
     @ApiOperation(value = "Delete role")
-    public String deleteUser(Long[] ids) {
-        roleService.removeByIds(Arrays.asList(ids));
+    public String deleteRole(@RequestBody Long[] ids) {
+        roleService.removeRolesByIds(Arrays.asList(ids));
         return ACTION_SUCCESSFUL;
     }
 
     @PutMapping("/update")
     @Auth(id = 3, name = "编辑角色")
     @ApiOperation(value = "Update role")
-    public String updateMenus(@RequestBody @Validated(RoleParam.UpdateResources.class) RoleParam param) {
+    public String updateRole(@RequestBody @Validated(RoleParam.UpdateResources.class) RoleParam param) {
         roleService.updatePermissions(param);
         return ACTION_SUCCESSFUL;
     }
 
     @GetMapping("/list")
-    @Auth(id = 4, name = "查询所有角色信息")
+//    @Auth(id = 4, name = "查询所有角色信息")
     @ApiOperation(value = "Get all roles")
     public List<Role> getRoleList() {
         return roleService.list();
     }
 
-    @GetMapping("/page/{current}")
-    @Auth(id = 5, name = "分页查询角色信息")
+    @GetMapping("/page/{current}&{pageSize}")
+//    @Auth(id = 5, name = "分页查询角色信息")
     @ApiOperation(value = "Page through role information")
-    public IPage<RolePageVO> getPage(@PathVariable("current") int current) {
+    public IPage<RolePageVO> getRolePage(@PathVariable("current") int current, @PathVariable("pageSize") int pageSize) {
         // Set pagination parameters
         Page<RolePageVO> page = new Page<>();
         OrderItem orderItem = new OrderItem();
         orderItem.setColumn("id");
-        page.setCurrent(current).addOrder(orderItem);
+        page.setCurrent(current).setSize(pageSize).addOrder(orderItem);
         return roleService.selectPage(page);
     }
 

@@ -131,8 +131,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             throw new ApiException(ResultCode.FAILED,"Username already exists.");
         }
         User user = new User();
-        // Default password 12345
-        user.setUsername(param.getUsername()).setPassword(passwordEncoder.encode("12345"));
+        // Default password = username
+        user.setUsername(param.getUsername()).setPassword(passwordEncoder.encode(param.getUsername()));
         save(user);
         if (CollectionUtil.isEmpty(param.getRoleIds())) {
             return;

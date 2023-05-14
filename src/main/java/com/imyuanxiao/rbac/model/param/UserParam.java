@@ -20,7 +20,7 @@ public class UserParam {
     private Long id;
 
     @NotBlank(message = "Username is required.", groups = CreateUser.class)
-    @Length(min = 4, max = 12, message = "Username must be between 4 and 12 characters in length.", groups = CreateUser.class)
+    @Length(min = 4, max = 20, message = "Username must be between 4-20 characters in length.", groups = CreateUser.class)
     private String username;
 
     private List<Long> roleIds;

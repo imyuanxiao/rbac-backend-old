@@ -57,7 +57,8 @@ public class UserController {
     @DeleteMapping("/delete")
     @Auth(id = 2, name = "删除用户")
     @ApiOperation(value = "Delete user")
-    public String deleteUser(Long[] ids) {
+    public String deleteUser(@RequestBody Long[] ids) {
+
         if (ArrayUtils.isEmpty(ids)) {
             throw new ApiException(ResultCode.VALIDATE_FAILED);
         }
@@ -68,13 +69,13 @@ public class UserController {
     @PutMapping("/update")
     @Auth(id = 3, name = "编辑用户")
     @ApiOperation(value = "Update user")
-    public String updateRoles(@RequestBody @Validated(UserParam.Update.class) UserParam param) {
+    public String updateUser(@RequestBody @Validated(UserParam.Update.class) UserParam param) {
         userService.update(param);
         return ACTION_SUCCESSFUL;
     }
 
     @GetMapping("/get/{id}")
-    @Auth(id = 4, name = "通过id获取用户信息")
+//    @Auth(id = 4, name = "通过id获取用户信息")
     @ApiOperation(value = "Get user info based on user ID")
     public User getUserById(@ApiParam(value = "User ID", required = true)
                             @PathVariable("id") Long id) {
@@ -82,14 +83,14 @@ public class UserController {
     }
 
     @GetMapping("/permissions/{id}")
-    @Auth(id = 5, name = "通过id获取用户权限")
+//    @Auth(id = 5, name = "通过id获取用户权限")
     @ApiOperation(value = "Get permissions based on user ID")
     public Set<Long> getPermissionsByUserId(@PathVariable("id") Long userId) {
         return permissionService.getIdsByUserId(userId);
     }
 
     @GetMapping("/page/{current}&{pageSize}")
-    @Auth(id = 6, name = "分页查询用户信息")
+//    @Auth(id = 6, name = "分页查询用户信息")
     @ApiOperation(value = "Page through user information")
     public IPage<UserPageVO> getPage(@PathVariable("current") int current, @PathVariable("pageSize") int pageSize) {
         // 设置分页参数

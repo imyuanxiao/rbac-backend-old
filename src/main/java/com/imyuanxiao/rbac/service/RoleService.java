@@ -80,4 +80,6 @@ public interface RoleService extends IService<Role> {
      **/
     Set<Role> getRolesByUserId(Long userId);
 
+     boolean removeRolesByIds(Collection<?> idList);
+
 }

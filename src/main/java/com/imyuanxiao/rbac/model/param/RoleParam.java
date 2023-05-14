@@ -20,7 +20,7 @@ public class RoleParam {
     private Long id;
 
     @NotBlank(message = "Role name is required", groups = CreateRole.class)
-    @Length(min = 1, max = 12, message = "Role name must be between 1 and 12 characters in length.", groups = CreateRole.class)
+    @Length(min = 4, max = 20, message = "Role name must be between 4-20 characters in length.", groups = CreateRole.class)
     private String name;
 
     private Set<Long> permissionIds;

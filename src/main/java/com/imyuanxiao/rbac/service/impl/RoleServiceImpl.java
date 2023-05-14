@@ -77,13 +77,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
 
     @Override
     public void updatePermissions(RoleParam param) {
-        // 先删除原有数据
+        // 先删除原有角色对应的权限数据
         permissionMapper.deleteByRoleId(param.getId());
-        // 如果角色为空就代表删除所有角色，不用后面新增流程了
+        // 如果新的权限ID为空就代表删除所有权限，不用后面新增流程了
         if (CollectionUtil.isEmpty(param.getPermissionIds())) {
             return;
         }
-        // 再新增数据
+        // 新增权限ID
         permissionMapper.insertPermissionsByRoleId(param.getId(), param.getPermissionIds());
     }
 
@@ -102,14 +102,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         permissionMapper.insertPermissionsByRoleId(role.getId(), param.getPermissionIds());
     }
 
-    @Override
-    public boolean removeByIds(Collection<?> idList) {
+    public boolean removeRolesByIds(Collection<?> idList) {
         if (CollectionUtil.isEmpty(idList)) {
             return false;
         }
         // 删除角色下所属的权限
         for (Object roleId : idList) {
-            permissionMapper.deleteByRoleId((int)roleId);
+            permissionMapper.deleteByRoleId((Long)roleId);
         }
         // 删除角色
         baseMapper.deleteBatchIds(idList);

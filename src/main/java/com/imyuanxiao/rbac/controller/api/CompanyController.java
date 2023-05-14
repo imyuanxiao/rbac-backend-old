@@ -32,7 +32,7 @@ public class CompanyController {
     private CompanyService companyService;
 
     @GetMapping("/list")
-    @Auth(id = 1, name = "查询所有公司信息")
+//    @Auth(id = 1, name = "查询所有公司信息")
     @ApiOperation(value = "Get all companies")
     public List<Company> list() {
         return companyService.list();

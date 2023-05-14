@@ -32,7 +32,7 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @GetMapping("/list")
-    @Auth(id = 1, name = "查询所有权限信息")
+//    @Auth(id = 1, name = "查询所有权限信息")
     @ApiOperation(value = "Get all permissions")
     public List<Permission> getPermissionList() {
         return permissionService.list();
