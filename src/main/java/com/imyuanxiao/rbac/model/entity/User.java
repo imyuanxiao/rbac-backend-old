@@ -63,7 +63,7 @@ public class User extends BaseEntity implements Serializable{
      * avatar
      */
     @TableField(value = "avatar")
-    private byte[] avatar;
+    private String avatar;
 
     @Serial
     @TableField(exist = false)

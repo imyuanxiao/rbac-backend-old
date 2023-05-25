@@ -1,9 +1,6 @@
 package com.imyuanxiao.rbac.controller.api;
 
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.imyuanxiao.rbac.model.param.LoginParam;
 import com.imyuanxiao.rbac.model.param.RegisterParam;
 import com.imyuanxiao.rbac.model.vo.UserVO;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 /**
@@ -90,7 +86,7 @@ public class AuthController {
      * @param param registration-related parameters
      * @return User Value Object
      **/
-    @PostMapping("/register")
+    @PostMapping("/register/phone")
     @ApiOperation(value = "Register by phone")
     public UserVO register(@RequestBody @Valid RegisterParam param){
         //TODO get Code from redis according to phone

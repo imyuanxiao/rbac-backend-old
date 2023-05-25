@@ -2235,8 +2235,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     ...
 }
 ```
-# 基于redis的验证码和token验证
-将验证码和token保存在redis数据库，用于手机号验证码校验和token有效性校验
 
 # 踩坑记录
 ## HttpMediaTypeNotAcceptableException
